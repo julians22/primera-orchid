@@ -6,6 +6,61 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: "Bodoni Moda", ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+    --font-serif--font-variation-settings: "opsz" 8;
+
+    /* everglade Color */
+    --color-everglade: oklch(32.208% 0.04514 204.23);
+    --color-everglade-50: oklch(53.937% 0.08092 203.94);
+    --color-everglade-100: oklch(51.464% 0.07681 204.54);
+    --color-everglade-200: oklch(47.007% 0.0695 204.45);
+    --color-everglade-300: oklch(42.125% 0.06129 204.47);
+    --color-everglade-400: oklch(37.396% 0.05404 204.23);
+    --color-everglade-500: oklch(32.208% 0.04514 204.23);
+    --color-everglade-600: oklch(28.957% 0.03985 203.09);
+    --color-everglade-700: oklch(25.347% 0.03295 205.19);
+    --color-everglade-800: oklch(21.887% 0.02705 203.69);
+    --color-everglade-900: oklch(18.261% 0.0213 200.96);
+    --color-everglade-950: oklch(16.237% 0.01738 202.54);
+
+    --color-soft-linen-50: oklch(96.70% 0.008 91.48);
+    --color-soft-linen-100: oklch(93.66% 0.018 92.69);
+    --color-soft-linen-200: oklch(87.05% 0.035 90.53);
+    --color-soft-linen-300: oklch(80.57% 0.053 91.40);
+    --color-soft-linen-400: oklch(74.03% 0.071 91.79);
+    --color-soft-linen-500: oklch(67.44% 0.087 91.76);
+    --color-soft-linen-600: oklch(57.32% 0.073 91.53);
+    --color-soft-linen-700: oklch(46.73% 0.058 91.15);
+    --color-soft-linen-800: oklch(35.49% 0.041 90.37);
+    --color-soft-linen-900: oklch(23.55% 0.024 92.99);
+    --color-soft-linen-950: oklch(19.62% 0.018 91.80);
+
+}
+
+@layer components{
+    /* Home Slider */
+
+    .home-swiper .content-container-wrapper{
+        @apply bg-cover bg-center aspect-[20/8];
+    }
+
+    .home-swiper .content-container{
+        @apply grid grid-cols-12 mx-auto border-everglade border-b h-11/12 container;
+    }
+}
+
+@layer utilities{
+
+
+}
+
+.home-swiper .swiper-pagination-bullet{
+    border-width: var(--swiper-border-width, 0px);
+}
+
+.home-swiper .swiper-pagination-bullet.swiper-pagination-bullet-active{
+    --swiper-pagination-color: var(--color-everglade-500);
+    width: var(--swiper-pagination-bullet-active-width, 20px);
+    height: var(--swiper-pagination-bullet-active-height, 20px);
 }
