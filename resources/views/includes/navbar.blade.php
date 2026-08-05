@@ -1,5 +1,6 @@
-<header class="bg-white">
-    <nav class="bg-everglade py-4">
+<header
+    class="bg-white" id="header">
+    <div class="bg-everglade py-4">
         <div class="grid grid-cols-3 mx-auto container">
             <div class="flex gap-x-4">
                 {{-- Social Icons --}}
@@ -27,30 +28,30 @@
                 <span class="text-white">ID</span>
             </div>
         </div>
-    </nav>
+    </div>
 
 
-    <nav class="py-4">
+    <nav class="menu" :class="{ 'should-fixed': scroll }">
         <div class="mx-auto container">
             {{-- About Us Products Articles CIRCLE(LOGO) Subscription Contact Us {SEARCH BOX} --}}
-            <ul class="items-center grid grid-cols-7">
-                <li class="px-6 text-center"><a href="#" class="font-semibold text-everglade uppercase">About Us</a></li>
-                <li class="px-6 text-center"><a href="#" class="font-semibold text-everglade uppercase">Products</a></li>
-                <li class="px-6 text-center"><a href="#" class="font-semibold text-everglade uppercase">Articles</a></li>
+            <ul class="items-center gap-x-4 grid grid-cols-7">
+                <li class="text-center"><a href="{{ route('about') }}" class="font-semibold text-everglade uppercase">About Us</a></li>
+                <li class="text-center"><a href="#" class="font-semibold text-everglade uppercase">Products</a></li>
+                <li class="text-center"><a href="{{ route('article.index') }}" class="font-semibold text-everglade uppercase">Articles</a></li>
                 <li class="">
                     {{-- Logo Curcle and absolute position half is outside bottom --}}
-                    <div class="relative w-[180px]">
-                        <div class="-top-4 left-0 z-10 absolute flex justify-center items-center bg-everglade px-8 rounded-full w-full aspect-square overflow-hidden">
+                    <a href="{{ route('home') }}" class="block relative w-[180px]">
+                        <div class="logo-wrapper">
                             <img src="{{ asset('img/logo-persegi.png') }}" class="w-full" alt="" width="230">
                         </div>
-                    </div>
+                    </a>
                 </li>
-                <li class="px-6 text-center"><a href="#" class="font-semibold text-everglade uppercase">Subscription</a></li>
-                <li class="px-6 text-center"><a href="#" class="font-semibold text-everglade uppercase">Contact Us</a></li>
-                <li class="px-6 text-center">
+                <li class="text-center"><a href="{{ route('services') }}" class="font-semibold text-everglade uppercase">Subscription</a></li>
+                <li class="text-center"><a href="{{ route('contact') }}" class="font-semibold text-everglade uppercase">Contact Us</a></li>
+                <li class="text-center">
                     <div class="relative">
-                        <input type="text" class="bg-transparent pb-1 border border-everglade rounded-full focus:outline-none w-32 text-everglade" placeholder="Search">
-                        {{-- <x-heroicon-o-magnifying-glass class="top-0 right-0 absolute size-5 text-everglade"/> --}}
+                        <input type="text" class="bg-transparent px-2 py-1 border border-everglade rounded-full focus:outline-none w-32 w-full text-everglade" placeholder="Search">
+                        <x-heroicon-o-magnifying-glass class="top-1/2 right-2 absolute size-5 text-everglade -translate-y-1/2 transform"/>
                     </div>
                 </li>
             </ul>

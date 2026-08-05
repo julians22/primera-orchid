@@ -1,9 +1,13 @@
 @import 'tailwindcss';
+@plugin "tailwindcss-motion";
+@plugin "@tailwindcss/typography";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
+@source '../views/filament/forms/components/rich-editor/rich-content-custom-blocks/hero/index.blade.php';
 @source '../**/*.js';
+
 
 @theme {
     --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -38,7 +42,31 @@
 
 }
 
+
+
 @layer components{
+
+    .menu{
+        @apply static py-4;
+    }
+
+    .menu.should-fixed{
+        @apply fixed top-0 z-50 inset-x-0 bg-soft-linen-50/90 backdrop-blur-sm transition-all duration-300;
+    }
+
+    .logo-wrapper{
+        @apply -top-4 left-0 z-10 absolute flex justify-center items-center bg-everglade px-8 rounded-full w-full aspect-square overflow-hidden transition-all duration-300 ease-in-out;
+    }
+
+    .menu.should-fixed .logo-wrapper{
+        /* it should change to non circle */
+        @apply static py-2 aspect-auto;
+    }
+
+    .decorative-title{
+        @apply font-serif font-semibold text-everglade text-6xl italic;
+    }
+
     /* Home Slider */
 
     .home-swiper .content-container-wrapper{
@@ -48,11 +76,64 @@
     .home-swiper .content-container{
         @apply grid grid-cols-12 mx-auto border-everglade border-b h-11/12 container;
     }
+
+    .home-swiper .content-container .swiper-animate{
+        @apply invisible;
+    }
+    .home-swiper .content-container .swiper-animate.visible{
+        @apply visible;
+    }
+
+    .section-header-collection{
+        @apply flex mx-auto text-everglade container;
+    }
+
+    .collection-wrapper{
+        @apply flex flex-col justify-center gap-6 max-w-2/5 min-h-96;
+    }
+
+    .collection-wrapper span{
+        @apply block text-everglade;
+    }
+
+    .collection-wrapper .tagline{
+        @apply font-bold text-2xl;
+    }
+
+    .collection-wrapper .title{
+        @apply font-serif font-semibold text-8xl italic;
+    }
+
+    .collection-wrapper .subtitle{
+        @apply text-lg;
+    }
+
+    .animate-opacity-in{
+        @apply motion-opacity-in-100 motion-blur-in-lg transition-all motion-duration-500;
+    }
+
+    .animate-opacity-out{
+        @apply motion-opacity-out-0 motion-blur-out-lg transition-all motion-duration-500;
+    }
+
+    .animate-up-in{
+        @apply motion-opacity-in-0 motion-blur-in-lg transition-all motion-translate-y-in-100 motion-duration-500;
+    }
+
+    .animate-up-out{
+        @apply motion-opacity-out-0 motion-blur-out-lg transition-all motion-translate-y-out-100 motion-duration-500;
+    }
+
+    .animate-left-in{
+        @apply motion-opacity-in-0 motion-blur-in-lg transition-all motion-translate-x-in-100 motion-duration-500;
+    }
 }
 
-@layer utilities{
-
-
+@utility container {
+  /* Center by default */
+  @apply mx-auto;
+  /* Add horizontal padding */
+  @apply px-4 sm:px-8 lg:px-16 2xl:px-32 xl:px-24;
 }
 
 .home-swiper .swiper-pagination-bullet{

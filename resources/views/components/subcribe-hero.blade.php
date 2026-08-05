@@ -1,9 +1,19 @@
-<section class="flex items-center bg-cover bg-no-repeat bg-center" style="background-image: url({{asset('img/bg-pattern.jpg')}})">
+<section
+    x-intersect:enter.full="shown = true" x-intersect:leave.full="shown = false" x-data="{ shown: false }"
+    class="flex items-center bg-cover bg-no-repeat bg-center" style="background-image: url({{asset('img/bg-pattern.jpg')}})">
     <div class="flex flex-col gap-4 mx-auto py-28 max-w-3xl">
-        <h3 class="font-serif font-semibold text-everglade text-7xl text-center italic">JOIN PRIMERA SUBSCRIPTION!</h3>
-        <p class="text-everglade text-2xl text-center tracking-widest">WE PROVIDE MONTHLY FLOWER MAINTENANCE</p>
-        <p class="block bg-everglade mx-auto px-7 py-3.5 rounded-full w-max font-extrabold text-white">GET 10% OFF FIRST MONTH</p>
-        <a href="#" class="group flex items-center space-x-4 mx-auto px-6 py-3 border border-everglade rounded-full w-max text-everglade">
+        <h3
+            :class="shown ? 'animate-up-in' : 'animate-up-out'"
+            class="font-serif font-semibold text-everglade text-7xl text-center italic">JOIN PRIMERA SUBSCRIPTION!</h3>
+        <p
+            :class="shown ? 'animate-up-in' : 'animate-up-out'"
+            class="text-everglade text-2xl text-center tracking-widest">WE PROVIDE MONTHLY FLOWER MAINTENANCE</p>
+        <p
+            :class="shown ? 'animate-up-in' : 'animate-up-out'"
+            class="block bg-everglade mx-auto px-7 py-3.5 rounded-full w-max font-extrabold text-white">GET 10% OFF FIRST MONTH</p>
+        <a
+            :class="shown ? 'animate-up-in' : 'animate-up-out'"
+            href="#" class="group flex items-center space-x-4 mx-auto px-6 py-3 border border-everglade rounded-full w-max text-everglade">
             <span class="font-semibold">Join Now</span>
             <span class="w-0 group-hover:w-14 transition-all duration-300">
                 <?xml version="1.0" encoding="UTF-8"?>

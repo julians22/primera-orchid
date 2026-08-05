@@ -14,7 +14,10 @@
         <!-- Styles / Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body>
+    <body
+        x-data="{ scroll: false }"
+        @scroll.window="scroll = (window.pageYOffset > 40)"
+        class="antialiased scroll-smooth">
         @include('includes.navbar')
 
         <div id="app">

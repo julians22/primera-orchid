@@ -21,5 +21,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // Seed collections and products
+        $this->call([
+            CollectionSeeder::class,
+            ProductSeeder::class,
+            ServiceSeeder::class,
+            ArticleCategorySeeder::class,
+            TagSeeder::class,
+            ArticleSeeder::class,
+            StickyArticleSeeder::class,
+        ]);
     }
 }
