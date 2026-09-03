@@ -4,7 +4,21 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Primera Orchid') }}</title>
+
+        @if (!app()->environment('local'))
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-7CF4P8K59S"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-7CF4P8K59S');
+        </script>
+
+        @endif
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
