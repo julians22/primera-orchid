@@ -4,9 +4,11 @@
 
 <section class="relative py-8 lg:py-20 min-h-36">
     <header class="z-10 relative section-header-collection">
-        <div class="collection-wrapper">
-            {!! collection_hero_renderer($primaryCollection->body_content) !!}
-        </div>
+        @if ($primaryCollection && $primaryCollection->body_content)
+            <div class="collection-wrapper">
+                {!! collection_hero_renderer($primaryCollection->body_content) !!}
+            </div>
+        @endif
     </header>
     <picture>
         <img class="absolute inset-0 w-full h-full object-bottom object-cover" src="{{ asset('img/collection-1.png') }}" alt="">

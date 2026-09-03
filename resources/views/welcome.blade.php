@@ -11,10 +11,15 @@
         <div class="swiper-wrapper">
             <!-- Slides -->
             @for ($i = 0; $i < 4; $i++) <div class="swiper-slide">
-                <div class="content-container-wrapper" style="background-image: url({{asset('img/banner-1.jpg')}})">
+                <div class="content-container-wrapper">
+                    {{-- responsive background image --}}
+                    <picture>
+                        <source media="(min-width: 1024px)" srcset="{{asset('img/banner-1.jpg')}}">
+                        <img class="background" src="{{asset('img/banner-1-mobile.png')}}" alt="Banner">
+                    </picture>
                     <div class="content-container">
                         <div class="relative lg:col-span-6 pb-6 overflow-hidden">
-                            <div class="bottom-10 absolute flex flex-col gap-2">
+                            <div class="bottom-28 lg:bottom-10 absolute flex flex-col gap-2">
                                 <p class="text-everglade-500 text-lg motion-duration-700 swiper-animate">PREMIUM FRESH ORCHIDS, <br>CRAFTED WITH PASSION IN SURABAYA</p>
                                 <p class="font-serif font-semibold text-everglade-500 text-4xl lg:text-8xl italic motion-duration-700 motion-delay-200 swiper-animate">ORCHIDS PERFECTION</p>
                                 <p class="text-everglade-500 text-lg motion-duration-700 motion-delay-300 swiper-animate">At Primera Orchids, every bloom is thoughtfully curated to

@@ -73,6 +73,10 @@
         @apply bg-cover bg-center aspect-[2/3] lg:aspect-[20/8];
     }
 
+    .home-swiper .content-container-wrapper .background{
+        @apply absolute inset-0 w-full h-full object-cover;
+    }
+
     .home-swiper .content-container{
         @apply grid grid-cols-1 lg:grid-cols-12 mx-auto border-everglade lg:border-b h-11/12 container;
     }

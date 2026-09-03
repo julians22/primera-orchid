@@ -22,7 +22,7 @@
         x-data="{ shown: false }"
         x-intersect:leave="shown = false"
         class="z-10 relative gap-10 grid grid-cols-1 lg:grid-cols-2 container">
-        <div class="flex flex-col gap-y-6 lg:col-start-2 bg-soft-linen-50 lg:bg-transparent px-4 lg:px-0 py-4 lg:py-0 text-center">
+        <div class="flex flex-col gap-y-6 lg:col-start-2 bg-soft-linen-50 lg:bg-transparent px-4 lg:px-0 py-4 lg:py-0 lg:text-left text-center">
 
             <h1 class="inline-flex flex-col items-center lg:items-start gap-1 lg:gap-4 lg:mt-40 text-everglade">
                 <span class="opacity-0 text-lg lg:text-2xl motion-delay-500"

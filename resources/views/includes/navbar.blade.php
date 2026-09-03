@@ -80,12 +80,11 @@
             </button>
 
             {{-- Landscape logo, shown only when menu is closed --}}
-            <a href="{{ route('home') }}" class="flex justify-center" x-show="!mobileOpen">
-                <img src="{{ asset('img/logo-persegi.png') }}" class="rounded-2xl h-12 object-cover" alt="Primera Orchid">
-            </a>
-
-            {{-- Spacer to keep hamburger/logo balanced now that search is removed --}}
-            <div></div>
+            <div class="relative col-span-2" x-show="!mobileOpen">
+                <a href="{{ route('home') }}" class="flex justify-center bg-everglade ml-auto px-4 py-2 rounded-2xl">
+                    <img src="{{ asset('img/logo-persegi.png') }}" class="h-12 object-cover" alt="Primera Orchid">
+                </a>
+            </div>
         </div>
 
         {{-- Circle logo (open state only), overlapping top bar / panel boundary --}}
@@ -94,10 +93,10 @@
             x-transition:enter="transition ease-out duration-200 delay-75"
             x-transition:enter-start="opacity-0 scale-75"
             x-transition:enter-end="opacity-100 scale-100"
-            class="top-full z-30 absolute inset-x-0 flex justify-center -translate-y-1/2"
+            class="top-16 left-1/2 z-30 absolute flex justify-center size-32 -translate-x-1/2 -translate-y-1/2"
             style="display:none;"
         >
-            <a href="{{ route('home') }}" class="flex justify-center items-center bg-everglade border-4 border-white rounded-full size-32">
+            <a href="{{ route('home') }}" class="flex justify-center items-center bg-everglade border-4 border-white rounded-full size-full">
                 <img src="{{ asset('img/logo-persegi.png') }}" class="w-20" alt="Primera Orchid">
             </a>
         </div>
@@ -111,7 +110,7 @@
             x-transition:leave="transition ease-in duration-150"
             x-transition:leave-start="opacity-100 translate-y-0"
             x-transition:leave-end="opacity-0 -translate-y-2"
-            class="z-10 relative bg-everglade px-6 pt-20 pb-10"
+            class="top-0 z-10 fixed inset-x-0 bg-everglade px-6 pt-36 pb-10"
             style="display:none;"
         >
             <ul class="flex flex-col items-center gap-y-7">

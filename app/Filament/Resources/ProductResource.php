@@ -177,6 +177,10 @@ class ProductResource extends Resource
                     ->counts('collections')
                     ->sortable(),
 
+                TextColumn::make('collections.name')
+                    ->label('Collections')
+                    ->sortable(),
+
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -189,6 +193,17 @@ class ProductResource extends Resource
                     ->placeholder('All')
                     ->trueLabel('Featured')
                     ->falseLabel('Not Featured'),
+                // Collection Column Count Filter
+                TernaryFilter::make('collections_count')
+                    ->label('Collections')
+                    ->default(null)
+                    ->placeholder('All')
+                    ->trueLabel('Has Collections')
+                    ->falseLabel('No Collections')
+                    ->queries(
+                        true: fn ($query) => $query->has('collections'),
+                        false: fn ($query) => $query->doesntHave('collections'),
+                    ),
             ])
             ->recordActions([
                 EditAction::make(),
