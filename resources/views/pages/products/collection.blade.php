@@ -2,7 +2,7 @@
 
 @section('content')
 
-<section class="relative py-20 min-h-36">
+<section class="relative py-8 lg:py-20 min-h-36 ;g">
     <header class="z-10 relative section-header-collection">
         <div class="collection-wrapper">
             {!! collection_hero_renderer($collection->body_content) !!}
@@ -13,7 +13,7 @@
     </picture>
 </section>
 
-<section class="relative py-20 min-h-36">
+<section class="relative py-8 lg:py-20 min-h-36">
 
     <!-- Breadcrumbs -->
     <div class="z-10 relative mx-auto mb-10 container">
@@ -45,7 +45,7 @@
 
 
 <!-- Collection Section -->
-<section class="bg-white py-20 min-h-36">
+<section class="bg-white py-8 lg:py-20 min-h-36">
 
     <div class="mx-auto container">
         <div class="flex justify-between items-end gap-x-10 mb-10">
@@ -66,7 +66,7 @@
     <!-- Collection Card Grid -->
     <div class="mx-auto container">
 
-        <div class="gap-6 grid grid-cols-4">
+        <div class="gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
 
             {{-- Collection Card --}}
             {{-- Current Active Card, should have # Link Ancor --}}

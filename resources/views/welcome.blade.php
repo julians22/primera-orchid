@@ -215,7 +215,7 @@
 
     <!-- Section Title Mobile -->
     <div x-intersect:enter="shown = true" x-intersect:leave="shown = false" x-data="{ shown: false }">
-        <h3 class="lg:hidden flex flex-col items-center gap-4">
+        <h3 class="lg:hidden flex flex-col items-center gap-4 text-center">
             <span class="text-2xl"
                 :class="shown ? 'animate-up-in' : 'animate-up-out'"
                 >LOVED BY</span>

@@ -1,5 +1,10 @@
 <header
-    class="bg-white" id="header">
+    class="bg-white" id="header"
+        x-data="{ mobileOpen: false }"
+        x-effect="document.body.classList.toggle('overflow-hidden', mobileOpen)"
+        >
+
+    {{-- ============ DESKTOP TOP BAR (unchanged) ============ --}}
     <div class="hidden lg:block bg-everglade py-4">
         <div class="grid grid-cols-3 mx-auto container">
             <div class="flex gap-x-2 lg:gap-x-4">
@@ -30,7 +35,7 @@
         </div>
     </div>
 
-
+    {{-- ============ DESKTOP NAV (unchanged) ============ --}}
     <nav class="menu" :class="{ 'should-fixed': scroll }">
         <div class="mx-auto container">
             {{-- About Us Products Articles CIRCLE(LOGO) Subscription Contact Us {SEARCH BOX} --}}
@@ -58,4 +63,77 @@
         </div>
 
     </nav>
+
+    {{-- ============ MOBILE NAV (hidden on desktop) ============ --}}
+    <div class="lg:hidden relative">
+
+        {{-- Top bar --}}
+        <div class="z-20 relative items-center grid grid-cols-3 bg-white px-5 py-5">
+            {{-- Hamburger / Close --}}
+            <button @click="mobileOpen = !mobileOpen" class="flex flex-col justify-center gap-1.5 w-8" aria-label="Toggle menu">
+                <span class="block bg-everglade w-8 h-0.5 transition-transform duration-200"
+                      :class="mobileOpen && 'rotate-45 translate-y-2'"></span>
+                <span class="block bg-everglade w-8 h-0.5 transition-opacity duration-200"
+                      :class="mobileOpen && 'opacity-0'"></span>
+                <span class="block bg-everglade w-8 h-0.5 transition-transform duration-200"
+                      :class="mobileOpen && '-rotate-45 -translate-y-2'"></span>
+            </button>
+
+            {{-- Landscape logo, shown only when menu is closed --}}
+            <a href="{{ route('home') }}" class="flex justify-center" x-show="!mobileOpen">
+                <img src="{{ asset('img/logo-persegi.png') }}" class="rounded-2xl h-12 object-cover" alt="Primera Orchid">
+            </a>
+
+            {{-- Spacer to keep hamburger/logo balanced now that search is removed --}}
+            <div></div>
+        </div>
+
+        {{-- Circle logo (open state only), overlapping top bar / panel boundary --}}
+        <div
+            x-show="mobileOpen"
+            x-transition:enter="transition ease-out duration-200 delay-75"
+            x-transition:enter-start="opacity-0 scale-75"
+            x-transition:enter-end="opacity-100 scale-100"
+            class="top-full z-30 absolute inset-x-0 flex justify-center -translate-y-1/2"
+            style="display:none;"
+        >
+            <a href="{{ route('home') }}" class="flex justify-center items-center bg-everglade border-4 border-white rounded-full size-32">
+                <img src="{{ asset('img/logo-persegi.png') }}" class="w-20" alt="Primera Orchid">
+            </a>
+        </div>
+
+        {{-- Dropdown panel --}}
+        <div
+            x-show="mobileOpen"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 -translate-y-2"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 -translate-y-2"
+            class="z-10 relative bg-everglade px-6 pt-20 pb-10"
+            style="display:none;"
+        >
+            <ul class="flex flex-col items-center gap-y-7">
+                <li><a href="{{ route('about') }}" class="font-bold text-white text-2xl uppercase">About Us</a></li>
+                <li><a href="#" class="font-bold text-white text-2xl uppercase">Products</a></li>
+                <li><a href="{{ route('article.index') }}" class="font-bold text-white text-2xl uppercase">Articles</a></li>
+                <li><a href="{{ route('services') }}" class="font-bold text-white text-2xl uppercase">Subscription</a></li>
+                <li><a href="{{ route('contact') }}" class="font-bold text-white text-2xl uppercase">Contact Us</a></li>
+            </ul>
+
+            <div class="flex justify-center items-center gap-x-2 mt-8 font-bold text-white text-lg">
+                <span class="pb-0.5 border-white border-b-2">EN</span>
+                <span>|</span>
+                <span>ID</span>
+            </div>
+
+            <div class="flex justify-center items-center gap-x-6 mt-6">
+                <span><x-si-instagram class="fill-white outline-white size-6"/></span>
+                <span><x-si-facebook class="fill-white outline-white size-6"/></span>
+                <span><x-si-youtube class="fill-white outline-white size-6"/></span>
+            </div>
+        </div>
+
+    </div>
 </header>

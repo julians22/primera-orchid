@@ -2,7 +2,7 @@
 
 @section('content')
 
-<section class="z-0 relative bg-soft-linen-50 py-20 lg:min-h-[1200px] overflow-y-hidden">
+<section class="z-0 relative bg-soft-linen-50 py-8 lg:py-20 lg:min-h-[1200px] overflow-y-hidden">
     <div class="-top-1/12 left-0 absolute max-w-lg"
         x-intersect:enter="shown = true"
         x-data="{ shown: false }"

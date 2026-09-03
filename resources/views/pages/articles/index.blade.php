@@ -2,7 +2,7 @@
 
 @section('content')
 
-<section class="relative py-20 min-h-36">
+<section class="relative py-8 lg:py-20 min-h-36">
 
     <!-- Breadcrumbs -->
     <div class="z-10 relative mx-auto mb-10 container">

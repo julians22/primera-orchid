@@ -36,7 +36,7 @@
 </article>
 
 
-<section class="relative bg-stone-50 py-20 min-h-36">
+<section class="relative bg-stone-50 py-8 lg:py-20 min-h-36">
 
     <div class="items-center grid grid-cols-2 container">
 

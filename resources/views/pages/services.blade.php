@@ -22,7 +22,7 @@
         x-data="{ shown: false }"
         x-intersect:leave="shown = false"
         class="z-10 relative gap-10 grid grid-cols-1 lg:grid-cols-2 container">
-        <div class="flex flex-col gap-y-6 lg:col-start-2 bg-soft-linen-50 px-4 lg:px-0 py-4 lg:py-0 text-center">
+        <div class="flex flex-col gap-y-6 lg:col-start-2 bg-soft-linen-50 lg:bg-transparent px-4 lg:px-0 py-4 lg:py-0 text-center">
 
             <h1 class="inline-flex flex-col items-center lg:items-start gap-1 lg:gap-4 lg:mt-40 text-everglade">
                 <span class="opacity-0 text-lg lg:text-2xl motion-delay-500"
@@ -84,19 +84,17 @@
 
     <div x-intersect:enter.half="shown = true" x-intersect:leave.half="shown = false" x-data="{ shown: false }">
         <h3 class="flex flex-col items-center gap-4">
-            <span class="font-serif font-semibold text-everglade text-5xl italic"
+            <span class="font-serif font-semibold text-everglade text-3xl lg:text-5xl italic"
                 :class="shown ? 'animate-up-in' : 'animate-up-out'"
                 >HOW DOES IT WORKS?</span>
         </h3>
     </div>
 
-    <div class="mx-auto py-10 border-everglade border-b container"
-        x-intersect:enter.full="shown = true" x-intersect:leave.full="shown = false" x-data="{ shown: false }"
-        >
+    <div class="mx-auto py-10 border-everglade border-b container">
         <div class="gap-10 lg:gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
 
             <!-- 1. Custom Your Needs -->
-            <div class="flex flex-col items-center text-center">
+            <div class="flex flex-col items-center text-center" x-intersect:enter.full="shown = true" x-intersect:leave.full="shown = false" x-data="{ shown: false }">
                 <div class="flex flex-col justify-center items-center bg-everglade mb-4 p-4 rounded-full w-40 aspect-square">
                     <picture>
                         <source srcset="{{ asset('img/icon/chat.webp') }}" type="image/webp">
@@ -112,7 +110,7 @@
             </div>
 
             <!-- 2. First Delivery -->
-            <div class="flex flex-col items-center text-center">
+            <div class="flex flex-col items-center text-center" x-intersect:enter.full="shown = true" x-intersect:leave.full="shown = false" x-data="{ shown: false }">
                 <div class="flex flex-col justify-center items-center bg-everglade mb-4 p-4 rounded-full w-40 aspect-square">
                     <picture>
                         <source srcset="{{ asset('img/icon/truck.webp') }}" type="image/webp">
@@ -128,7 +126,7 @@
             </div>
 
             <!-- 3. Easy Maintenance -->
-            <div class="flex flex-col items-center text-center">
+            <div class="flex flex-col items-center text-center" x-intersect:enter.full="shown = true" x-intersect:leave.full="shown = false" x-data="{ shown: false }">
                 <div class="flex flex-col justify-center items-center bg-everglade mb-4 p-4 rounded-full w-40 aspect-square">
                     <picture>
                         <source srcset="{{ asset('img/icon/water-can.webp') }}" type="image/webp">
@@ -144,7 +142,7 @@
             </div>
 
             <!-- 4. Routine Replenishment -->
-            <div class="flex flex-col items-center text-center">
+            <div class="flex flex-col items-center text-center" x-intersect:enter.full="shown = true" x-intersect:leave.full="shown = false" x-data="{ shown: false }">
                 <div class="flex flex-col justify-center items-center bg-everglade mb-4 p-4 rounded-full w-40 aspect-square">
                     <picture>
                         <source srcset="{{ asset('img/icon/calendar.webp') }}" type="image/webp">
@@ -168,7 +166,7 @@
 
     @foreach ($services as $service)
     <div
-        @if(!$loop->last) class="pb-12 border-everglade border-b" @endif
+        @if(!$loop->last) class="pb-4 lg:pb-12 border-everglade border-b" @endif
     >
         <div class="flex sm:flex-row flex-col sm:justify-between sm:items-start gap-3 mb-6">
             <div>
@@ -207,22 +205,40 @@
 
 <section
     x-intersect:enter.half="shown = true" x-intersect:leave.half="shown = false" x-data="{ shown: false }"
-    class="bg-white py-20 min-h-36">
+    class="bg-white py-8 lg:py-20 min-h-36">
 
-    <h3 class="flex flex-col items-center gap-4">
-        <span class="text-2xl"
-            :class="shown ? 'animate-up-in' : 'animate-up-out'"
-            >LOVED BY</span>
-        <span class="font-serif font-semibold text-everglade text-5xl italic"
-            :class="shown ? 'animate-up-in' : 'animate-up-out'"
-            >OUR CUSTOMERS</span>
-    </h3>
+    <!-- Section Title Desktop -->
+    <div x-intersect:enter.half="shown = true" x-intersect:leave.half="shown = false" x-data="{ shown: false }">
+        <h3 class="hidden lg:flex flex-col items-center gap-4">
+            <span class="text-2xl"
+                :class="shown ? 'animate-up-in' : 'animate-up-out'"
+                >LOVED BY</span>
+            <span class="font-serif font-semibold text-everglade text-5xl italic"
+                :class="shown ? 'animate-up-in' : 'animate-up-out'"
+                >OUR CUSTOMERS</span>
+        </h3>
+    </div>
+
+    <!-- Section Title Mobile -->
+    <div x-intersect:enter="shown = true" x-intersect:leave="shown = false" x-data="{ shown: false }">
+        <h3 class="lg:hidden flex flex-col items-center gap-4 text-center">
+            <span class="text-2xl"
+                :class="shown ? 'animate-up-in' : 'animate-up-out'"
+                >LOVED BY</span>
+            <span class="font-serif font-semibold text-everglade text-5xl italic"
+                :class="shown ? 'animate-up-in' : 'animate-up-out'"
+                >OUR CUSTOMERS</span>
+        </h3>
+    </div>
 
     <div class="mx-auto pt-20 container">
 
-        <div class="flex justify-center gap-4">
+        <div class="flex lg:flex-row flex-col justify-center gap-4">
 
-            <div class="relative flex bg-soft-linen-100 px-4 pt-16 pb-4 rounded-2xl max-w-2xl">
+            <div class="relative flex lg:flex-row flex-col bg-soft-linen-100 px-4 pt-4 lg:pt-16 pb-4 rounded-2xl max-w-2xl">
+                <div class="lg:-top-16 lg:left-1/2 lg:absolute lg:inset-x-0 mx-auto lg:mx-0 rounded-full w-32 h-32 overflow-hidden lg:-translate-x-1/2">
+                    <img src="{{ asset('img/customer-1.png') }}" alt="" class="w-full h-full object-cover">
+                </div>
                 <div class="flex flex-col items-center">
                     <!-- Name -->
                     <p class="font-bold text-everglade text-xl">Ayu Putri</p>
@@ -232,12 +248,12 @@
                     <p class="text-everglade text-lg">"I am absolutely delighted with the orchids I received from Primera Orchids! The quality and freshness of the blooms exceeded my expectations. The arrangement was stunning, and it brought so much joy to my home. I highly recommend Primera Orchids for anyone looking for exquisite floral arrangements."</p>
                 </div>
 
-                <div class="-top-16 left-1/2 absolute inset-x-0 rounded-full w-32 h-32 overflow-hidden -translate-x-1/2">
-                    <img src="{{ asset('img/customer-1.png') }}" alt="" class="w-full h-full object-cover">
-                </div>
             </div>
 
-            <div class="relative flex bg-soft-linen-100 px-4 pt-16 pb-4 rounded-2xl max-w-2xl">
+            <div class="relative flex lg:flex-row flex-col bg-soft-linen-100 px-4 pt-4 lg:pt-16 pb-4 rounded-2xl max-w-2xl">
+                <div class="lg:-top-16 lg:left-1/2 lg:absolute lg:inset-x-0 mx-auto lg:mx-0 rounded-full w-32 h-32 overflow-hidden lg:-translate-x-1/2">
+                    <img src="{{ asset('img/customer-1.png') }}" alt="" class="w-full h-full object-cover">
+                </div>
                 <div class="flex flex-col items-center">
                     <!-- Name -->
                     <p class="font-bold text-everglade text-xl">Bella Nabella</p>
@@ -247,9 +263,6 @@
                     <p class="text-everglade text-lg">"Primera Orchids never disappoints! The orchids I ordered were delivered promptly and in perfect condition. The blooms were vibrant and long-lasting, and the arrangement was simply beautiful. I am extremely satisfied with my purchase and will definitely order again!"</p>
                 </div>
 
-                <div class="-top-16 left-1/2 absolute inset-x-0 rounded-full w-32 h-32 overflow-hidden -translate-x-1/2">
-                    <img src="{{ asset('img/customer-1.png') }}" alt="" class="w-full h-full object-cover">
-                </div>
             </div>
 
 
