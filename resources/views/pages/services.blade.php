@@ -2,7 +2,7 @@
 
 @section('content')
 
-<section class="z-0 relative bg-soft-linen-50 py-20 lg:min-h-[1100px] overflow-y-hidden">
+<section class="z-0 relative bg-white lg:bg-soft-linen-50 py-8 lg:py-20 lg:min-h-[1100px] overflow-y-hidden">
     {{-- <div class="-top-1/12 left-0 absolute max-w-lg"
         x-intersect:enter="shown = true"
         x-data="{ shown: false }"
@@ -13,36 +13,40 @@
             src="{{ asset('img/flower-shade.png') }}" class="opacity-0 transition-all motion-delay-500" alt="">
     </div> --}}
 
+    <div class="lg:hidden block container">
+        <img src="{{ asset('img/service-banner-mobile.png') }}" class="w-full h-auto" alt="">
+    </div>
+
     <div
         x-intersect:enter="shown = true"
         x-data="{ shown: false }"
         x-intersect:leave="shown = false"
-        class="z-10 relative gap-10 grid grid-cols-2 container">
-        <div class="flex flex-col gap-y-6 col-start-2">
+        class="z-10 relative gap-10 grid grid-cols-1 lg:grid-cols-2 container">
+        <div class="flex flex-col gap-y-6 lg:col-start-2 bg-soft-linen-50 px-4 lg:px-0 py-4 lg:py-0 text-center">
 
-            <h1 class="inline-flex flex-col items-start gap-4 lg:mt-40 text-everglade">
-                <span class="opacity-0 text-2xl motion-delay-500"
+            <h1 class="inline-flex flex-col items-center lg:items-start gap-1 lg:gap-4 lg:mt-40 text-everglade">
+                <span class="opacity-0 text-lg lg:text-2xl motion-delay-500"
                     :class="shown ? 'animate-opacity-in opacity-100' : 'animate-opacity-out'"
                     >MONTHLY FLOWER MAINTENANCE</span>
 
                 <span
                     :class="shown ? 'animate-opacity-in opacity-100' : 'animate-opacity-out'"
-                    class="opacity-0 font-serif font-semibold text-7xl italic motion-delay-700">
+                    class="opacity-0 font-serif lg:font-semibold font-bold text-3xl lg:text-7xl italic motion-delay-700">
                     PRIMERA SUBSCRIPTION
                 </span>
             </h1>
 
-            <span class="inline-block bg-everglade px-8 py-2 rounded-full max-w-max font-bold text-white text-2xl">GET 10% OFF FIRST MONTH</span>
+            <span class="inline-block bg-everglade mx-auto lg:mx-0 px-4 lg:px-8 py-2 rounded-full max-w-max font-bold text-white text-lg lg:text-2xl">GET 10% OFF FIRST MONTH</span>
 
             <p class="inline-block">
-                <span class="font-black text-everglade text-2xl">IDR 140-200K</span>
+                <span class="font-black text-everglade text-lg lg:text-2xl">IDR 140-200K</span>
                 <br>
-                <span class="font-bold text-everglade text-lg">Per Plant</span>
+                <span class="font-bold text-everglade text-base lg:text-lg">Per Plant</span>
             </p>
 
             <p
                 :class="shown ? 'animate-opacity-in' : 'animate-opacity-out'"
-                class="text-everglade text-xl leading-relaxed">
+                class="text-everglade text-lg lg:text-xl leading-relaxed">
                 Flower option: white // Flower lasts average of 3-4 Weeks // Recommended
                 change cycle: every 4 weeks // Include free pot rental // Exclude delivery fee //
                 Our customers include: Vong Kitchen, Alila Hotel, Sopo Del Tower, Home
@@ -50,9 +54,9 @@
             </p>
 
             <!-- Join now -->
-            <a href="#"
+            <a href="{{ whatsapp_link('6280818978781', 'Hello, I am interested in the Primera Subscription.') }}"
                 :class="shown ? 'animate-up-in' : 'animate-up-out'"
-                class="group flex items-center space-x-4 px-6 py-3 border border-everglade rounded-full w-max text-everglade delay-150">
+                class="group flex items-center space-x-4 mx-auto lg:mx-0 px-6 py-3 border border-everglade rounded-full w-max text-everglade delay-150">
                 <span class="font-semibold">Join Now</span>
                 <span class="w-0 group-hover:w-14 transition-all duration-300">
                     <?xml version="1.0" encoding="UTF-8"?>
@@ -69,14 +73,14 @@
         </div>
     </div>
 
-    <div class="bottom-0 z-0 absolute inset-x-0">
+    <div class="hidden lg:block bottom-0 z-0 absolute inset-x-0">
         <img src="{{ asset('img/service-banner.png') }}" alt="" class="w-full h-auto">
     </div>
 
 </section>
 
 <section
-    class="bg-white pt-20 min-h-36">
+    class="bg-white pt-8 lg:pt-20 min-h-36">
 
     <div x-intersect:enter.half="shown = true" x-intersect:leave.half="shown = false" x-data="{ shown: false }">
         <h3 class="flex flex-col items-center gap-4">
@@ -180,15 +184,19 @@
 
             @foreach ($service->items as $item)
             <!-- {{$item->title}} -->
-            <div class="flex flex-col bg-everglade shadow-sm rounded-lg overflow-hidden">
-                <div class="w-full aspect-[12/8] overflow-hidden">
+            <a
+                href="{{ whatsapp_link('6282218181660', __('general.cta_service_message', ['service' => $service->title . ' - ' . $item->title])) }}"
+                class="relative flex flex-col bg-everglade shadow-sm rounded-lg overflow-hidden">
+                <div class="flex-shrink-0 w-full aspect-[12/8] overflow-hidden">
                     <img src="{{ asset($item->getFirstMediaUrl('image')) }}" alt="" class="rounded-lg w-full h-full object-cover">
                 </div>
-                <div class="bg-everglade py-3 text-white text-center">
+                <div class="flex flex-col justify-center bg-everglade py-3 h-full text-white text-center">
                     <p class="font-bold text-lg">{{ $item->title }}</p>
-                    <p class="font-medium text-sm">(Min 2 pots)</p>
+                    @if ($item->subtitle)
+                        <p class="font-medium text-sm">{{ $item->subtitle }}</p>
+                    @endif
                 </div>
-            </div>
+            </a>
             @endforeach
         </div>
 

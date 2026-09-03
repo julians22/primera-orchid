@@ -17,7 +17,7 @@
         x-intersect:enter="shown = true"
         x-data="{ shown: false }"
         x-intersect:leave="shown = false"
-        class="z-10 relative gap-10 grid grid-cols-2 container">
+        class="z-10 relative gap-10 grid grid-cols-1 lg:grid-cols-2 container">
         <div class="flex flex-col gap-y-6">
 
             <h1 class="inline-flex flex-col items-start gap-4 lg:mt-40 text-everglade">
@@ -27,7 +27,7 @@
 
                 <span
                     :class="shown ? 'animate-opacity-in opacity-100' : 'animate-opacity-out'"
-                    class="opacity-0 font-serif font-semibold text-7xl italic motion-delay-700">
+                    class="opacity-0 font-serif font-semibold text-5xl lg:text-7xl italic motion-delay-700">
                     THE TIMELESS
                     ELEGANCE OF
                     ORCHIDS
@@ -59,27 +59,32 @@
         </div>
     </div>
 
-    <div class="bottom-0 z-0 absolute inset-x-0">
+    <div class="hidden lg:block bottom-0 z-0 absolute inset-x-0">
         <img src="{{ asset('img/about-flower.png') }}" alt="" class="ml-auto w-full max-w-11/12 h-auto">
     </div>
 
 </section>
 
 <!-- Best Seller Sections -->
-<section class="bg-white py-20 min-h-36"
-    x-intersect:enter.half="shown = true"
-    x-data="{ shown: false }"
-    x-intersect:leave.half="shown = false"
-    >
+<section class="bg-white py-8 lg:py-20 min-h-36">
     <div class="mx-auto container">
         <div class="flex justify-between items-center mb-10">
 
-            <!-- Title -->
             <div>
-                <h2 class="inline-flex flex-col items-start gap-4">
-                    <span class="text-2xl" :class="shown ? 'animate-up-in' : 'animate-up-out'">OUR</span>
-                    <span class="decorative-title" :class="shown ? 'animate-up-in' : 'animate-up-out'">BEST SELLER</span>
-                </h2>
+                <!-- Title Desktop -->
+                <div x-intersect:enter.half="shown = true" x-intersect:leave.half="shown = false" x-data="{ shown: false }">
+                    <h2 class="hidden lg:inline-flex flex-col items-start gap-4">
+                        <span class="text-2xl" :class="shown ? 'animate-up-in' : 'animate-up-out'">OUR</span>
+                        <span class="delay-150 decorative-title" :class="shown ? 'animate-up-in' : 'animate-up-out'">BEST SELLER</span>
+                    </h2>
+                </div>
+                <!-- Title Mobile -->
+                <div x-intersect:enter="shown = true" x-intersect:leave="shown = false" x-data="{ shown: false }">
+                    <h2 class="lg:hidden inline-flex flex-col items-start gap-2">
+                        <span class="text-2xl" :class="shown ? 'animate-up-in' : 'animate-up-out'">OUR</span>
+                        <span class="delay-150 decorative-title" :class="shown ? 'animate-up-in' : 'animate-up-out'">BEST SELLER</span>
+                    </h2>
+                </div>
             </div>
 
             <!-- Button See More -->
@@ -108,7 +113,7 @@
     <!-- Product Card Grid -->
     <div class="mx-auto container">
 
-        <div class="gap-8 grid grid-cols-4">
+        <div class="gap-8 grid grid-cols-1 lg:grid-cols-4">
             @foreach ($best_seller_products as $product)
                 <x-product-card
                     :image="asset('img/product-1.jpg')"

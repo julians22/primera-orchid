@@ -1,7 +1,7 @@
 <footer class="bg-everglade pt-16 pb-14">
 
-    <div class="flex justify-between mx-auto container">
-        <div class="flex flex-col gap-4 max-w-1/3">
+    <div class="flex lg:flex-row flex-col justify-between mx-auto container">
+        <div class="flex flex-col gap-4 lg:max-w-1/3">
             <img src="{{ asset('img/logo-persegi.png') }}" alt="" width="230">
             <p class="text-white"><strong>#1 INDONESIAN MINI ORCHIDS IN A BOX</strong></p>
 
@@ -15,14 +15,16 @@
                 <li class="flex gap-3">
                     <x-si-whatsapp class="fill-white outline-white size-5"/>
                     <div>
-                        <a href="" class="text-white">0818 978 781</a>
+                        <a
+                            target="_blank"
+                            href="{{ whatsapp_link('6280818978781') }}" class="text-white">0818 978 781</a>
                     </div>
                 </li>
             </ul>
         </div>
 
 
-        <div class="flex flex-col gap-8 max-w-1/3">
+        <div class="flex flex-col gap-8 lg:max-w-1/3">
             <p class="font-bold text-white text-lg">Get a first peek at new products, special offers, and so much more</p>
 
             <form action="#" class="inline-flex gap-4">

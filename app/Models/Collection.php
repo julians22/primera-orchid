@@ -10,6 +10,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Collection extends Model implements HasMedia
 {
@@ -76,6 +77,19 @@ class Collection extends Model implements HasMedia
 
         $this->addMediaCollection('hero_background')
             ->singleFile();
+    }
+
+    /**
+     * Register media conversions.
+     */
+    public function registerMediaConversions(Media $media = null): void
+    {
+        // WebP conversion for thumbnail
+        $this->addMediaConversion('webp_format')
+            ->format('webp')
+            ->width(420)
+            ->performOnCollections('thumbnail')
+            ->nonQueued();
     }
 
     /**

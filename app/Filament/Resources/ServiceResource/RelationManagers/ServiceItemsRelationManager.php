@@ -40,6 +40,10 @@ class ServiceItemsRelationManager extends RelationManager
                     ->required()
                     ->maxLength(255),
 
+                TextInput::make('subtitle')
+                    ->label('Item Subtitle')
+                    ->maxLength(255),
+
                 TextInput::make('sort_order')
                     ->label('Sort Order')
                     ->numeric()

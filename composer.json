@@ -10,6 +10,7 @@
         "brunocfalcao/blade-feather-icons": "^5.0",
         "codeat3/blade-simple-icons": "^8.1",
         "codeat3/blade-simple-line-icons": "^1.5",
+        "davidhsianturi/blade-bootstrap-icons": "^2.2",
         "filament/filament": "~4.0",
         "filament/spatie-laravel-media-library-plugin": "~4.0",
         "lara-zeus/spatie-translatable": "^1.0",

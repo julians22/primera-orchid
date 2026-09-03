@@ -4,7 +4,7 @@
     <div class="flex flex-col gap-4 mx-auto py-28 max-w-3xl">
         <h3
             :class="shown ? 'animate-up-in' : 'animate-up-out'"
-            class="font-serif font-semibold text-everglade text-7xl text-center italic">JOIN PRIMERA SUBSCRIPTION!</h3>
+            class="font-serif font-semibold text-everglade text-3xl lg:text-7xl text-center italic">JOIN PRIMERA SUBSCRIPTION!</h3>
         <p
             :class="shown ? 'animate-up-in' : 'animate-up-out'"
             class="text-everglade text-2xl text-center tracking-widest">WE PROVIDE MONTHLY FLOWER MAINTENANCE</p>

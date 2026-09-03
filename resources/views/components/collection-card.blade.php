@@ -49,7 +49,7 @@
     {{-- Content --}}
     <div class="bottom-0 absolute inset-x-0 flex flex-col items-start gap-3 p-5">
         <h3 class="drop-shadow-sm font-serif text-white text-4xl italic leading-[1.15]">
-            {{ $title }}
+            {!! $title !!}
         </h3>
 
         <span

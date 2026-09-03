@@ -73,7 +73,7 @@
             @foreach ($collections as $collection_item)
 
                 <x-collection-card
-                    :image="asset('img/collection-1.png')"
+                    :image="$collection_item->getFirstMediaUrl('thumbnail', 'webp_format') ?? asset('img/placeholder.png')"
                     :title="$collection_item->name"
                     :href="$collection_item->slug == $collection->slug ? '#products-'.$collection->slug : route('collection.show', $collection_item->slug)"
                 />

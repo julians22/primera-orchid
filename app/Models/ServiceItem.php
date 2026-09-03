@@ -21,6 +21,7 @@ class ServiceItem extends Model implements HasMedia
     protected $fillable = [
         'service_id',
         'title',
+        'subtitle',
         'sort_order',
     ];
 

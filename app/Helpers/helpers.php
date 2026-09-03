@@ -14,3 +14,11 @@ if (!function_exists('collection_hero_renderer')) {
             ->toHtml();
     }
 }
+
+if (!function_exists('whatsapp_link')) {
+    function whatsapp_link(string $phoneNumber, ?string $message = null): string
+    {
+        $encodedMessage = $message ? urlencode($message) : '';
+        return "https://wa.me/{$phoneNumber}" . ($encodedMessage ? "?text={$encodedMessage}" : '');
+    }
+}
