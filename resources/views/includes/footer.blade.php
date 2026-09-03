@@ -27,7 +27,7 @@
         <div class="flex flex-col gap-8 lg:max-w-1/3">
             <p class="font-bold text-white text-lg">Get a first peek at new products, special offers, and so much more</p>
 
-            <form action="#" class="inline-flex gap-4">
+            <form action="#" class="inline-flex lg:flex-row flex-col gap-4">
                 <input type="text" class="bg-white px-3 py-1.5 rounded-full focus:outline-none" placeholder="Email Address">
                 <button type="submit" class="px-3 py-1.5 border border-white rounded-full text-white">Sign up</button>
             </form>
