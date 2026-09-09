@@ -23,12 +23,13 @@
 @endphp
 
 <header
-    class="bg-white" id="header"
-        x-data="{ mobileOpen: false, productOpen: false }"
-        x-effect="document.body.classList.toggle('overflow-hidden', mobileOpen)"
-        >
+    class="bg-white"
+    id="header"
+    x-data="{ mobileOpen: false, productOpen: false }"
+    x-effect="document.body.classList.toggle('overflow-hidden', mobileOpen)"
+>
 
-    {{-- ============ DESKTOP TOP BAR (unchanged) ============ --}}
+    {{-- ============ DESKTOP TOP BAR ============ --}}
     <div class="hidden lg:block bg-everglade py-4">
         <div class="grid grid-cols-3 mx-auto container">
             <div class="flex gap-x-2 lg:gap-x-4">
@@ -59,24 +60,34 @@
         </div>
     </div>
 
-    {{-- ============ DESKTOP NAV (unchanged) ============ --}}
+    {{-- ============ DESKTOP NAV ============ --}}
     <nav class="menu" :class="{ 'should-fixed': scroll }">
         <div class="mx-auto container">
             {{-- About Us Products Articles CIRCLE(LOGO) Subscription Contact Us {SEARCH BOX} --}}
             <ul class="flex flex-col items-center lg:gap-x-4 lg:grid grid-cols-7">
-                <li class="text-center"><a href="{{ route('about') }}" class="font-semibold text-everglade uppercase">About Us</a></li>
+                <li class="text-center">
+                    <a href="{{ route('about') }}" class="font-semibold text-everglade uppercase">About Us</a>
+                </li>
+
                 <li class="group relative text-center">
-                    <a href="#" class="font-semibold text-everglade uppercase transition-colors duration-200 group-hover:text-everglade/80">Products</a>
+                    <a href="#" class="font-semibold text-everglade uppercase transition-colors duration-200 group-hover:text-everglade/80">
+                        Products
+                    </a>
 
                     @if ($productCollections->isNotEmpty())
-                        <div class="absolute left-1/2 top-full z-50 hidden min-w-48 -translate-x-1/2 pt-4 group-hover:block">
+                        <div
+                            class="absolute left-1/2 top-full z-50 min-w-48 -translate-x-1/2 pt-4 invisible opacity-0 -translate-y-2 pointer-events-none transition-all duration-300 ease-out group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto"
+                        >
                             <div class="overflow-hidden rounded-xl border border-everglade/10 bg-white shadow-lg">
                                 @foreach ($productCollections as $collection)
                                     @php
                                         $collectionLabel = $collection->name ?? $collection->title ?? $collection->slug ?? $collection->code ?? $collection->id;
                                         $collectionUrl = $buildCollectionUrl($collection);
                                     @endphp
-                                    <a href="{{ $collectionUrl }}" class="block border-b border-everglade/10 px-4 py-3 text-left text-sm font-medium text-everglade transition-colors duration-200 hover:bg-everglade/5 last:border-b-0">
+                                    <a
+                                        href="{{ $collectionUrl }}"
+                                        class="block border-b border-everglade/10 px-4 py-3 text-left text-sm font-medium text-everglade transition-all duration-200 ease-out hover:bg-everglade/5 hover:pl-5 last:border-b-0"
+                                    >
                                         {{ $collectionLabel }}
                                     </a>
                                 @endforeach
@@ -84,7 +95,11 @@
                         </div>
                     @endif
                 </li>
-                <li class="text-center"><a href="{{ route('article.index') }}" class="font-semibold text-everglade uppercase">Articles</a></li>
+
+                <li class="text-center">
+                    <a href="{{ route('article.index') }}" class="font-semibold text-everglade uppercase">Articles</a>
+                </li>
+
                 <li class="hidden lg:block">
                     {{-- Logo Curcle and absolute position half is outside bottom --}}
                     <a href="{{ route('home') }}" class="block relative w-[180px]">
@@ -93,11 +108,22 @@
                         </div>
                     </a>
                 </li>
-                <li class="text-center"><a href="{{ route('services') }}" class="font-semibold text-everglade uppercase">Subscription</a></li>
-                <li class="text-center"><a href="{{ route('contact') }}" class="font-semibold text-everglade uppercase">Contact Us</a></li>
+
+                <li class="text-center">
+                    <a href="{{ route('services') }}" class="font-semibold text-everglade uppercase">Subscription</a>
+                </li>
+
+                <li class="text-center">
+                    <a href="{{ route('contact') }}" class="font-semibold text-everglade uppercase">Contact Us</a>
+                </li>
+
                 <li class="text-center">
                     <div class="relative">
-                        <input type="text" class="bg-transparent px-2 py-1 border border-everglade rounded-full focus:outline-none w-32 w-full text-everglade" placeholder="Search">
+                        <input
+                            type="text"
+                            class="bg-transparent px-2 py-1 border border-everglade rounded-full focus:outline-none w-32 w-full text-everglade"
+                            placeholder="Search"
+                        >
                         <x-heroicon-o-magnifying-glass class="top-1/2 right-2 absolute size-5 text-everglade -translate-y-1/2 transform"/>
                     </div>
                 </li>
@@ -110,19 +136,43 @@
     <div class="lg:hidden relative">
 
         {{-- Top bar --}}
-        <div class="z-20 relative items-center grid grid-cols-3 bg-white px-5 py-5">
+        <div class="z-50 relative items-center grid grid-cols-3 bg-white px-5 py-5">
             {{-- Hamburger / Close --}}
-            <button @click="mobileOpen = !mobileOpen" class="flex flex-col justify-center gap-1.5 w-8" aria-label="Toggle menu">
-                <span class="block bg-everglade w-8 h-0.5 transition-transform duration-200"
-                      :class="mobileOpen && 'rotate-45 translate-y-2'"></span>
-                <span class="block bg-everglade w-8 h-0.5 transition-opacity duration-200"
-                      :class="mobileOpen && 'opacity-0'"></span>
-                <span class="block bg-everglade w-8 h-0.5 transition-transform duration-200"
-                      :class="mobileOpen && '-rotate-45 -translate-y-2'"></span>
+            <button
+                @click="
+                    mobileOpen = !mobileOpen;
+                    if (!mobileOpen) productOpen = false;
+                "
+                class="flex flex-col justify-center gap-1.5 w-8"
+                aria-label="Toggle menu"
+            >
+                <span
+                    class="block bg-everglade w-8 h-0.5 transition-all duration-300 ease-out"
+                    :class="mobileOpen && 'rotate-45 translate-y-2'"
+                ></span>
+
+                <span
+                    class="block bg-everglade w-8 h-0.5 transition-all duration-200 ease-out"
+                    :class="mobileOpen && 'opacity-0'"
+                ></span>
+
+                <span
+                    class="block bg-everglade w-8 h-0.5 transition-all duration-300 ease-out"
+                    :class="mobileOpen && '-rotate-45 -translate-y-2'"
+                ></span>
             </button>
 
             {{-- Landscape logo, shown only when menu is closed --}}
-            <div class="relative col-span-2" x-show="!mobileOpen">
+            <div
+                class="relative col-span-2"
+                x-show="!mobileOpen"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 scale-95"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-95"
+            >
                 <a href="{{ route('home') }}" class="flex justify-center bg-everglade ml-auto px-4 py-2 rounded-2xl">
                     <img src="{{ asset('img/logo-persegi.png') }}" class="h-12 object-cover" alt="Primera Orchid">
                 </a>
@@ -132,10 +182,13 @@
         {{-- Circle logo (open state only), overlapping top bar / panel boundary --}}
         <div
             x-show="mobileOpen"
-            x-transition:enter="transition ease-out duration-200 delay-75"
+            x-transition:enter="transition ease-out duration-300 delay-75"
             x-transition:enter-start="opacity-0 scale-75"
             x-transition:enter-end="opacity-100 scale-100"
-            class="top-16 left-1/2 z-30 absolute flex justify-center size-32 -translate-x-1/2 -translate-y-1/2"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 scale-100"
+            x-transition:leave-end="opacity-0 scale-75"
+            class="top-16 left-1/2 z-50 absolute flex justify-center size-32 -translate-x-1/2 -translate-y-1/2"
             style="display:none;"
         >
             <a href="{{ route('home') }}" class="flex justify-center items-center bg-everglade border-4 border-white rounded-full size-full">
@@ -146,39 +199,83 @@
         {{-- Dropdown panel --}}
         <div
             x-show="mobileOpen"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 -translate-y-2"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 -translate-y-4"
             x-transition:enter-end="opacity-100 translate-y-0"
-            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave="transition ease-in duration-250"
             x-transition:leave-start="opacity-100 translate-y-0"
-            x-transition:leave-end="opacity-0 -translate-y-2"
-            class="top-0 z-10 fixed inset-x-0 bg-everglade px-6 pt-36 pb-10"
+            x-transition:leave-end="opacity-0 -translate-y-4"
+            class="top-0 z-40 fixed inset-x-0 bg-everglade px-6 pt-36 pb-10"
             style="display:none;"
         >
             <ul class="flex flex-col items-center gap-y-7">
-                <li><a href="{{ route('about') }}" class="font-bold text-white text-2xl uppercase">About Us</a></li>
+                <li>
+                    <a href="{{ route('about') }}" class="font-bold text-white text-2xl uppercase">About Us</a>
+                </li>
+
                 @if ($productCollections->isNotEmpty())
-                    <li class="relative">
-                        <button @click="productOpen = !productOpen" class="font-bold text-white text-2xl uppercase flex items-center gap-x-2">
+                    <li class="relative z-50">
+                        <button
+                            @click="productOpen = !productOpen"
+                            class="font-bold text-white text-2xl uppercase flex items-center gap-x-2"
+                        >
                             Products
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-200" :class="{ 'rotate-180': productOpen }" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.584l3.71-4.354a.75.75 0 111.14.976l-4.25 5a.75.75 0 01-1.14 0l-4.25-5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 transition-transform duration-300 ease-out"
+                                :class="{ 'rotate-180': productOpen }"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.584l3.71-4.354a.75.75 0 111.14.976l-4.25 5a.75.75 0 01-1.14 0l-4.25-5a.75.75 0 01.02-1.06z"
+                                    clip-rule="evenodd"
+                                />
                             </svg>
                         </button>
-                        <ul x-show="productOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="mt-2 space-y-2 bg-everglade/90 rounded-lg p-4 text-white text-lg font-semibold shadow-lg">
+
+                        <ul
+                            x-show="productOpen"
+                            x-transition:enter="transition ease-out duration-300"
+                            x-transition:enter-start="opacity-0 -translate-y-3 scale-95"
+                            x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                            x-transition:leave="transition ease-in duration-200"
+                            x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                            x-transition:leave-end="opacity-0 -translate-y-3 scale-95"
+                            class="relative z-50 mt-2 space-y-2 bg-everglade/90 rounded-lg p-4 text-white text-lg font-semibold shadow-lg origin-top"
+                        >
                             @foreach ($productCollections as $collection)
                                 @php
                                     $collectionLabel = $collection->name ?? $collection->title ?? $collection->slug ?? $collection->code ?? $collection->id;
                                     $collectionUrl = $buildCollectionUrl($collection);
                                 @endphp
-                                <li><a href="{{ $collectionUrl }}" class="block hover:text-everglade/80">{{ $collectionLabel }}</a></li>
+
+                                <li>
+                                    <a
+                                        href="{{ $collectionUrl }}"
+                                        class="block transition-all duration-200 hover:text-everglade/80 hover:translate-x-1"
+                                    >
+                                        {{ $collectionLabel }}
+                                    </a>
+                                </li>
                             @endforeach
                         </ul>
                     </li>
                 @endif
-                <li><a href="{{ route('article.index') }}" class="font-bold text-white text-2xl uppercase">Articles</a></li>
-                <li><a href="{{ route('services') }}" class="font-bold text-white text-2xl uppercase">Subscription</a></li>
-                <li><a href="{{ route('contact') }}" class="font-bold text-white text-2xl uppercase">Contact Us</a></li>
+
+                <li>
+                    <a href="{{ route('article.index') }}" class="font-bold text-white text-2xl uppercase">Articles</a>
+                </li>
+
+                <li>
+                    <a href="{{ route('services') }}" class="font-bold text-white text-2xl uppercase">Subscription</a>
+                </li>
+
+                <li>
+                    <a href="{{ route('contact') }}" class="font-bold text-white text-2xl uppercase">Contact Us</a>
+                </li>
             </ul>
 
             <div class="flex justify-center items-center gap-x-2 mt-8 font-bold text-white text-lg">
