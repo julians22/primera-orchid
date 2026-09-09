@@ -1,6 +1,30 @@
+@php
+    $productCollections = collect();
+    foreach (['\\App\\Models\\ProductCollection', '\\App\\Models\\Collection', '\\App\\Models\\ProductCategory', '\\App\\Models\\Collections'] as $modelClass) {
+        if (!class_exists($modelClass)) {
+            continue;
+        }
+
+        try {
+            $candidate = $modelClass::query()->get();
+            if ($candidate->isNotEmpty()) {
+                $productCollections = $candidate;
+                break;
+            }
+        } catch (\Throwable $e) {
+            continue;
+        }
+    }
+
+    $buildCollectionUrl = function ($collection) {
+        $slug = $collection->slug ?? $collection->code ?? $collection->title ?? $collection->name ?? $collection->id;
+        return url('/products/' . urlencode((string) $slug));
+    };
+@endphp
+
 <header
     class="bg-white" id="header"
-        x-data="{ mobileOpen: false }"
+        x-data="{ mobileOpen: false, productOpen: false }"
         x-effect="document.body.classList.toggle('overflow-hidden', mobileOpen)"
         >
 
@@ -41,7 +65,25 @@
             {{-- About Us Products Articles CIRCLE(LOGO) Subscription Contact Us {SEARCH BOX} --}}
             <ul class="flex flex-col items-center lg:gap-x-4 lg:grid grid-cols-7">
                 <li class="text-center"><a href="{{ route('about') }}" class="font-semibold text-everglade uppercase">About Us</a></li>
-                <li class="text-center"><a href="#" class="font-semibold text-everglade uppercase">Products</a></li>
+                <li class="group relative text-center">
+                    <a href="#" class="font-semibold text-everglade uppercase transition-colors duration-200 group-hover:text-everglade/80">Products</a>
+
+                    @if ($productCollections->isNotEmpty())
+                        <div class="absolute left-1/2 top-full z-50 hidden min-w-48 -translate-x-1/2 pt-4 group-hover:block">
+                            <div class="overflow-hidden rounded-xl border border-everglade/10 bg-white shadow-lg">
+                                @foreach ($productCollections as $collection)
+                                    @php
+                                        $collectionLabel = $collection->name ?? $collection->title ?? $collection->slug ?? $collection->code ?? $collection->id;
+                                        $collectionUrl = $buildCollectionUrl($collection);
+                                    @endphp
+                                    <a href="{{ $collectionUrl }}" class="block border-b border-everglade/10 px-4 py-3 text-left text-sm font-medium text-everglade transition-colors duration-200 hover:bg-everglade/5 last:border-b-0">
+                                        {{ $collectionLabel }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                </li>
                 <li class="text-center"><a href="{{ route('article.index') }}" class="font-semibold text-everglade uppercase">Articles</a></li>
                 <li class="hidden lg:block">
                     {{-- Logo Curcle and absolute position half is outside bottom --}}
@@ -115,7 +157,25 @@
         >
             <ul class="flex flex-col items-center gap-y-7">
                 <li><a href="{{ route('about') }}" class="font-bold text-white text-2xl uppercase">About Us</a></li>
-                <li><a href="#" class="font-bold text-white text-2xl uppercase">Products</a></li>
+                @if ($productCollections->isNotEmpty())
+                    <li class="relative">
+                        <button @click="productOpen = !productOpen" class="font-bold text-white text-2xl uppercase flex items-center gap-x-2">
+                            Products
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-200" :class="{ 'rotate-180': productOpen }" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.584l3.71-4.354a.75.75 0 111.14.976l-4.25 5a.75.75 0 01-1.14 0l-4.25-5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <ul x-show="productOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="mt-2 space-y-2 bg-everglade/90 rounded-lg p-4 text-white text-lg font-semibold shadow-lg">
+                            @foreach ($productCollections as $collection)
+                                @php
+                                    $collectionLabel = $collection->name ?? $collection->title ?? $collection->slug ?? $collection->code ?? $collection->id;
+                                    $collectionUrl = $buildCollectionUrl($collection);
+                                @endphp
+                                <li><a href="{{ $collectionUrl }}" class="block hover:text-everglade/80">{{ $collectionLabel }}</a></li>
+                            @endforeach
+                        </ul>
+                    </li>
+                @endif
                 <li><a href="{{ route('article.index') }}" class="font-bold text-white text-2xl uppercase">Articles</a></li>
                 <li><a href="{{ route('services') }}" class="font-bold text-white text-2xl uppercase">Subscription</a></li>
                 <li><a href="{{ route('contact') }}" class="font-bold text-white text-2xl uppercase">Contact Us</a></li>
