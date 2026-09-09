@@ -102,7 +102,7 @@
 
                 <li class="hidden lg:block">
                     {{-- Logo Curcle and absolute position half is outside bottom --}}
-                    <a href="{{ route('home') }}" class="block relative w-[180px]">
+                    <a href="{{ route('home') }}" class="block relative w-45">
                         <div class="logo-wrapper">
                             <img src="{{ asset('img/logo-persegi.png') }}" class="w-full" alt="" width="230">
                         </div>
@@ -121,7 +121,7 @@
                     <div class="relative">
                         <input
                             type="text"
-                            class="bg-transparent px-2 py-1 border border-everglade rounded-full focus:outline-none w-32 w-full text-everglade"
+                            class="bg-transparent px-2 py-1 border border-everglade rounded-full focus:outline-none w-32 text-everglade"
                             placeholder="Search"
                         >
                         <x-heroicon-o-magnifying-glass class="top-1/2 right-2 absolute size-5 text-everglade -translate-y-1/2 transform"/>
