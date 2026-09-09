@@ -18,7 +18,7 @@
 
     $buildCollectionUrl = function ($collection) {
         $slug = $collection->slug ?? $collection->code ?? $collection->title ?? $collection->name ?? $collection->id;
-        return url('/products/' . urlencode((string) $slug));
+        return url('/collection/' . urlencode((string) $slug));
     };
 @endphp
 
