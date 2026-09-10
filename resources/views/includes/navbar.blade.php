@@ -1,4 +1,8 @@
 @php
+    // Localization Nav
+    $isId = app()->getLocale() === 'id';
+
+
     $productCollections = collect();
     foreach (['\\App\\Models\\ProductCollection', '\\App\\Models\\Collection', '\\App\\Models\\ProductCategory', '\\App\\Models\\Collections'] as $modelClass) {
         if (!class_exists($modelClass)) {
@@ -49,7 +53,9 @@
         return $value;
     };
 @endphp
-
+@php
+    
+@endphp
 <header
     class="bg-white"
     id="header"
@@ -104,12 +110,12 @@
             {{-- About Us Products Articles CIRCLE(LOGO) Subscription Contact Us {SEARCH BOX} --}}
             <ul class="flex flex-col items-center lg:gap-x-4 lg:grid grid-cols-7">
                 <li class="text-center">
-                    <a href="{{ route('about') }}" class="font-semibold text-everglade uppercase">About Us</a>
+                    <a href="{{ $isId ? url('/tentang-kami') : route('about') }}" class="font-semibold text-everglade uppercase">{{ __('nav.about') }}</a>
                 </li>
 
                 <li class="group relative text-center">
-                    <a href="#" class="font-semibold text-everglade uppercase transition-colors duration-200 group-hover:text-everglade/80">
-                        Products
+                    <a href="{{ $isId ? url('/koleksi') : route('collection.index') }}" class="font-semibold text-everglade uppercase transition-colors duration-200 group-hover:text-everglade/80">
+                        {{ __('nav.collections') }}
                     </a>
 
                     @if ($productCollections->isNotEmpty())
@@ -139,7 +145,7 @@
                 </li>
 
                 <li class="text-center">
-                    <a href="{{ route('article.index') }}" class="font-semibold text-everglade uppercase">Articles</a>
+                    <a href="{{ $isId ? url('/artikel') : route('article.index') }}" class="font-semibold text-everglade uppercase">{{ __('nav.articles') }}</a>
                 </li>
 
                 <li class="hidden lg:block">
@@ -152,11 +158,11 @@
                 </li>
 
                 <li class="text-center">
-                    <a href="{{ route('services') }}" class="font-semibold text-everglade uppercase">Subscription</a>
+                    <a href="{{ $isId ? url('/layanan') : route('services') }}" class="font-semibold text-everglade uppercase">{{ __('nav.subscription') }}</a>
                 </li>
 
                 <li class="text-center">
-                    <a href="{{ route('contact') }}" class="font-semibold text-everglade uppercase">Contact Us</a>
+                    <a href="{{ $isId ? url('/kontak') : route('contact') }}" class="font-semibold text-everglade uppercase">{{ __('nav.contact') }}</a>
                 </li>
 
                 <li class="text-center">
@@ -215,7 +221,7 @@
                 x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-95"
             >
-                <a href="{{ route('home') }}" class="flex justify-center bg-everglade ml-auto px-4 py-2 rounded-2xl">
+                <a href="{{ $isId ? url('/') : route('home') }}" class="flex justify-center bg-everglade ml-auto px-4 py-2 rounded-2xl">
                     <img src="{{ asset('img/logo-persegi.png') }}" class="h-12 object-cover" alt="Primera Orchid">
                 </a>
             </div>
@@ -233,7 +239,7 @@
             class="top-16 left-1/2 z-50 absolute flex justify-center size-32 -translate-x-1/2 -translate-y-1/2"
             style="display:none;"
         >
-            <a href="{{ route('home') }}" class="flex justify-center items-center bg-everglade border-4 border-white rounded-full size-full">
+            <a href="{{ $isId ? url('/') : route('home') }}" class="flex justify-center items-center bg-everglade border-4 border-white rounded-full size-full">
                 <img src="{{ asset('img/logo-persegi.png') }}" class="w-20" alt="Primera Orchid">
             </a>
         </div>
@@ -252,7 +258,7 @@
         >
             <ul class="flex flex-col items-center gap-y-7">
                 <li>
-                    <a href="{{ route('about') }}" class="font-bold text-white text-2xl uppercase">About Us</a>
+                    <a href="{{ $isId ? url('/tentang-kami') : route('about') }}" class="font-bold text-white text-2xl uppercase">{{ __('nav.about') }}</a>
                 </li>
 
                 @if ($productCollections->isNotEmpty())
@@ -261,7 +267,7 @@
                             @click="productOpen = !productOpen"
                             class="font-bold text-white text-2xl uppercase flex items-center gap-x-2"
                         >
-                            Products
+                            {{ __('nav.collections') }}
 
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -312,15 +318,15 @@
                 @endif
 
                 <li>
-                    <a href="{{ route('article.index') }}" class="font-bold text-white text-2xl uppercase">Articles</a>
+                    <a href="{{ $isId ? url('/artikel') : route('article.index') }}" class="font-bold text-white text-2xl uppercase">{{ __('nav.articles') }}</a>
                 </li>
 
                 <li>
-                    <a href="{{ route('services') }}" class="font-bold text-white text-2xl uppercase">Subscription</a>
+                    <a href="{{ $isId ? url('/layanan') : route('services') }}" class="font-bold text-white text-2xl uppercase">{{ __('nav.subscription') }}</a>
                 </li>
 
                 <li>
-                    <a href="{{ route('contact') }}" class="font-bold text-white text-2xl uppercase">Contact Us</a>
+                    <a href="{{ $isId ? url('/kontak') : route('contact') }}" class="font-bold text-white text-2xl uppercase">{{ __('nav.contact') }}</a>
                 </li>
             </ul>
 

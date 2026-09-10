@@ -33,7 +33,7 @@
         @scroll.window="scroll = (window.pageYOffset > 40)"
         class="antialiased scroll-smooth">
         @include('includes.navbar')
-
+    
         <div id="app">
             @yield('content')
         </div>

@@ -16,6 +16,7 @@
         "lara-zeus/spatie-translatable": "^1.0",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
+        "livewire/livewire": "^3.8",
         "spatie/laravel-medialibrary": "^11.23",
         "spatie/laravel-sluggable": "^3.8",
         "spatie/laravel-translatable": "^6.0"
