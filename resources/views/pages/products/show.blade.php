@@ -4,9 +4,9 @@
 
 <section class="relative py-8 lg:py-20 min-h-36">
     <header class="z-10 relative section-header-collection">
-        @if ($primaryCollection && $primaryCollection->body_content)
+        @if ($primaryCollection && trans_field($primaryCollection, 'body_content'))
             <div class="collection-wrapper">
-                {!! collection_hero_renderer($primaryCollection->body_content) !!}
+                {!! collection_hero_renderer(trans_field($primaryCollection, 'body_content')) !!}
             </div>
         @endif
     </header>
@@ -23,30 +23,29 @@
             class="text-xl"
             :items="[
                 ['label' => 'Home', 'href' => url('/')],
-                ['label' => $primaryCollection->name, 'href' => route('collection.show', $primaryCollection->slug)],
-                ['label' => $product->name],
+                ['label' => trans_field($primaryCollection, 'name'), 'href' => route('collection.show', trans_field($primaryCollection, 'slug') ?? $primaryCollection->id)],
+                ['label' => trans_field($product, 'name')],
             ]"
         />
     </div>
 
-
     <!-- Product Details -->
-    <div class="z-10 relative mx-auto container" id="product-{{ $product->slug }}">
+    <div class="z-10 relative mx-auto container" id="product-{{ trans_field($product, 'slug') }}">
         <div class="gap-10 grid grid-cols-1 md:grid-cols-2">
             <div>
-                <img src="{{ asset('img/product-3.jpg') }}" alt="{{ $product->name }}" class="rounded-xl w-full object-cover aspect-[4/5]">
+                <img src="{{ asset('img/product-3.jpg') }}" alt="{{ trans_field($product, 'name') }}" class="rounded-xl w-full object-cover aspect-[4/5]">
             </div>
             <div class="flex flex-col gap-y-6">
                 <h1>
-                    <span class="block font-bold text-xl lg:text-3xl">{{ $primaryCollection->name }}</span>
-                    <span class="font-bold text-everglade text-4xl lg:text-6xl leading-snug">{{ $product->name }}</span>
+                    <span class="block font-bold text-xl lg:text-3xl">{{ trans_field($primaryCollection, 'name') }}</span>
+                    <span class="font-bold text-everglade text-4xl lg:text-6xl leading-snug">{{ trans_field($product, 'name') }}</span>
                 </h1>
 
                 <!-- Divider -->
                 <div class="bg-everglade rounded-full w-full h-px"></div>
 
                 <div>
-                    {!! $product->body_content !!}
+                    {!! trans_field($product, 'body_content') ?? trans_field($product, 'description') !!}
                 </div>
 
                 <!-- Divider -->
@@ -56,24 +55,33 @@
                 <div class="flex lg:flex-row flex-col gap-x-4">
 
                     <!-- Marketplace Button -->
-                    <a href="{{ $product->marketplace_link }}" target="_blank" />
+                    <a href="{{ $product->marketplace_link }}" target="_blank">
                         <button class="bg-everglade hover:bg-everglade-dark px-4 py-2 rounded-full w-full font-semibold text-white text-lg cursor-pointer">
-                            {{ __('Get it on Marketplace') }}
+                            {{ app()->getLocale() === 'id' ? 'Beli di Marketplace' : 'Get it on Marketplace' }}
                         </button>
                     </a>
 
                     <!-- Divide OR -->
                     <div class="flex items-center gap-x-4 text-center">
-                        <span class="w-full font-bold text-everglade text-lg">OR</span>
+                        <span class="w-full font-bold text-everglade text-lg">
+                            {{ app()->getLocale() === 'id' ? 'ATAU' : 'OR' }}
+                        </span>
                     </div>
 
                     <!-- Icon WhatsApp Button (Chat with us) -->
-                    <a href="https://wa.me/6282218181660?text={{ urlencode(__('general.cta_product_message', ['service' => $product->name])) }}" target="_blank">
+                    @php
+                        $productName = trans_field($product, 'name');
+                        $message = app()->getLocale() === 'id'
+                            ? "Halo, saya tertarik dengan produk {$productName}"
+                            : "Hello, I am interested in {$productName}";
+                    @endphp
+                    
+                    <a href="{{ whatsapp_link('6282218181660', $message) }}" target="_blank">
                         <button
                             class="inline-flex justify-center lg:justify-start items-center gap-x-3 bg-white hover:bg-everglade-dark px-4 py-2 border border-everglade rounded-full w-full font-semibold text-everglade text-lg cursor-pointer">
                             <x-bi-whatsapp class="size-5" />
                             <span>
-                                {{ __('Chat with us') }}
+                                {{ app()->getLocale() === 'id' ? 'Tanya via WhatsApp' : 'Chat with us' }}
                             </span>
                         </button>
                     </a>
@@ -83,7 +91,6 @@
             </div>
         </div>
     </div>
-
 
 </section>
 
@@ -96,11 +103,11 @@
             <!-- Title -->
             <div>
                 <h2 class="inline-flex flex-col items-start gap-4">
-                    <span class="font-serif font-semibold text-everglade text-4xl italic">YOU MIGHT LIKE</span>
+                    <span class="font-serif font-semibold text-everglade text-4xl italic">
+                        {{ app()->getLocale() === 'id' ? 'MUNGKIN ANDA SUKA' : 'YOU MIGHT LIKE' }}
+                    </span>
                 </h2>
             </div>
-            <!-- Horizontal Line -->
-            {{-- <div class="bg-everglade rounded-full w-full h-px"></div> --}}
 
         </div>
     </div>
@@ -113,10 +120,9 @@
             @foreach($relatedProducts as $relatedProduct)
                 <x-product-card
                     :image="asset('img/product-3.jpg')"
-                    :name="$relatedProduct->name"
-                    :href="route('product.show', $relatedProduct->slug)"
+                    :name="trans_field($relatedProduct, 'name')"
+                    :href="route('product.show', trans_field($relatedProduct, 'slug') ?? $relatedProduct->id)"
                 />
-
             @endforeach
 
         </div>
@@ -124,7 +130,5 @@
     </div>
 
 </section>
-
-
 
 @endsection

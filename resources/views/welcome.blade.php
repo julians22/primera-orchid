@@ -103,8 +103,8 @@
             @foreach ($best_seller_products as $product)
                 <x-product-card
                     :image="asset('img/product-1.jpg')"
-                    name="{{ $product->name }}"
-                    href="{{ route('product.show', $product->slug) }}"
+                    :name="trans_field($product, 'name')"
+                    :href="route('product.show', trans_field($product, 'slug') ?? $product->id)"
                 />
             @endforeach
         </div>
@@ -190,8 +190,8 @@
             @foreach ($collections as $collection)
                 <x-collection-card
                     :image="$collection->getFirstMediaUrl('thumbnail', 'webp_format') ?? asset('img/placeholder.png')"
-                    title="{{ \Str::upper($collection->name) }}"
-                    href="{{ route('collection.show', $collection->slug) }}"
+                    :title="\Str::upper(trans_field($collection, 'name'))"
+                    :href="route('collection.show', trans_field($collection, 'slug') ?? $collection->id)"
                 />
             @endforeach
 
@@ -310,21 +310,24 @@
         </div>
 
         <div class="gap-6 grid grid-cols-1 lg:grid-cols-3">
-
             @foreach ($latest_articles as $article)
-
                 <!-- Article Card {{ $loop->iteration }} -->
                 <article x-intersect:enter.half="shown = true" x-intersect:leave.half="shown = false" x-data="{ shown: false }" class="flex flex-col gap-4 bg-white rounded-2xl overflow-hidden delay-100">
                     <div class="rounded-xl w-full aspect-[20/9] overflow-hidden">
-                        <img src="{{ asset('img/article-1.png') }}" alt="" class="w-full h-full object-cover">
+                        <img src="{{ asset('img/article-1.png') }}" alt="{{ trans_field($article, 'title') }}" class="w-full h-full object-cover">
                     </div>
                     <div class="flex flex-col gap-2 px-8 py-4">
                         <p class="text-everglade text-sm delay-300"
                             :class="shown ? 'animate-up-in' : 'animate-up-out'"
-                            >{{ $article->category }}</p>
+                        >
+                            {{ trans_field($article, 'category') }}
+                        </p>
+
                         <h3 class="font-semibold text-everglade text-2xl delay-500"
                             :class="shown ? 'animate-up-in' : 'animate-up-out'"
-                            >{{ $article->title }}</h3>
+                        >
+                            {{ trans_field($article, 'title') }}
+                        </h3>
 
                         <!-- Line -->
                         <div class="bg-everglade rounded-full w-full h-px"></div>
@@ -332,17 +335,18 @@
                         <!-- Description -->
                         <p class="text-everglade delay-500"
                             :class="shown ? 'animate-up-in' : 'animate-up-out'"
-                        >Learn the essential tips and tricks to keep your orchids healthy and thriving. From watering techniques to light requirements, we've got you covered.</p>
+                        >
+                            {{ \Illuminate\Support\Str::limit(strip_tags((string) (trans_field($article, 'excerpt') ?? trans_field($article, 'description') ?? trans_field($article, 'body') ?? 'Learn the essential tips and tricks to keep your orchids healthy and thriving.')), 120) }}
+                        </p>
 
                         <!-- Read More Button -->
-                        <a href="{{ route('article.show', ['article' => $article->slug]) }}"
+                        <a href="{{ route('article.show', ['article' => trans_field($article, 'slug') ?? $article->id]) }}"
                             :class="shown ? 'animate-up-in' : 'animate-up-out'"
                             class="flex items-center space-x-4 px-2 py-1 border border-everglade rounded-full w-max text-everglade">
-                            <span class="font-semibold">Read More</span>
+                            <span class="font-semibold">{{ app()->getLocale() === 'id' ? 'Baca Selengkapnya' : 'Read More' }}</span>
                         </a>
                     </div>
                 </article>
-
             @endforeach
         </div>
 

@@ -3,15 +3,6 @@
 @section('content')
 
 <section class="z-0 relative bg-white lg:bg-soft-linen-50 py-8 lg:py-20 lg:min-h-[1100px] overflow-y-hidden">
-    {{-- <div class="-top-1/12 left-0 absolute max-w-lg"
-        x-intersect:enter="shown = true"
-        x-data="{ shown: false }"
-        x-intersect:leave="shown = false"
-    >
-        <img
-            :class="shown ? 'animate-opacity-in opacity-100' : 'animate-opacity-out'"
-            src="{{ asset('img/flower-shade.png') }}" class="opacity-0 transition-all motion-delay-500" alt="">
-    </div> --}}
 
     <div class="lg:hidden block container">
         <img src="{{ asset('img/service-banner-mobile.png') }}" class="w-full h-auto" alt="">
@@ -27,45 +18,54 @@
             <h1 class="inline-flex flex-col items-center lg:items-start gap-1 lg:gap-4 lg:mt-40 text-everglade">
                 <span class="opacity-0 text-lg lg:text-2xl motion-delay-500"
                     :class="shown ? 'animate-opacity-in opacity-100' : 'animate-opacity-out'"
-                    >MONTHLY FLOWER MAINTENANCE</span>
+                >
+                    {{ app()->getLocale() === 'id' ? 'PERAWATAN BUNGA BULANAN' : 'MONTHLY FLOWER MAINTENANCE' }}
+                </span>
 
                 <span
                     :class="shown ? 'animate-opacity-in opacity-100' : 'animate-opacity-out'"
                     class="opacity-0 font-serif lg:font-semibold font-bold text-3xl lg:text-7xl italic motion-delay-700">
-                    PRIMERA SUBSCRIPTION
+                    {{ app()->getLocale() === 'id' ? 'LANGGANAN PRIMERA' : 'PRIMERA SUBSCRIPTION' }}
                 </span>
             </h1>
 
-            <span class="inline-block bg-everglade mx-auto lg:mx-0 px-4 lg:px-8 py-2 rounded-full max-w-max font-bold text-white text-lg lg:text-2xl">GET 10% OFF FIRST MONTH</span>
+            <span class="inline-block bg-everglade mx-auto lg:mx-0 px-4 lg:px-8 py-2 rounded-full max-w-max font-bold text-white text-lg lg:text-2xl">
+                {{ app()->getLocale() === 'id' ? 'DISKON 10% BULAN PERTAMA' : 'GET 10% OFF FIRST MONTH' }}
+            </span>
 
             <p class="inline-block">
                 <span class="font-black text-everglade text-lg lg:text-2xl">IDR 140-200K</span>
                 <br>
-                <span class="font-bold text-everglade text-base lg:text-lg">Per Plant</span>
+                <span class="font-bold text-everglade text-base lg:text-lg">
+                    {{ app()->getLocale() === 'id' ? 'Per Tanaman' : 'Per Plant' }}
+                </span>
             </p>
 
             <p
                 :class="shown ? 'animate-opacity-in' : 'animate-opacity-out'"
                 class="text-everglade text-lg lg:text-xl leading-relaxed">
-                Flower option: white // Flower lasts average of 3-4 Weeks // Recommended
-                change cycle: every 4 weeks // Include free pot rental // Exclude delivery fee //
-                Our customers include: Vong Kitchen, Alila Hotel, Sopo Del Tower, Home
-                Subscriptions, Oasis
+                @if (app()->getLocale() === 'id')
+                    Pilihan bunga: putih // Bunga bertahan rata-rata 3-4 minggu // Siklus penggantian yang direkomendasikan: setiap 4 minggu // Termasuk sewa pot gratis // Belum termasuk ongkos kirim // Pelanggan kami meliputi: Vong Kitchen, Alila Hotel, Sopo Del Tower, Home Subscriptions, Oasis
+                @else
+                    Flower option: white // Flower lasts average of 3-4 Weeks // Recommended change cycle: every 4 weeks // Include free pot rental // Exclude delivery fee // Our customers include: Vong Kitchen, Alila Hotel, Sopo Del Tower, Home Subscriptions, Oasis
+                @endif
             </p>
 
             <!-- Join now -->
-            <a href="{{ whatsapp_link('6280818978781', 'Hello, I am interested in the Primera Subscription.') }}"
+            @php
+                $joinMessage = app()->getLocale() === 'id'
+                    ? 'Halo, saya tertarik dengan Langganan Primera.'
+                    : 'Hello, I am interested in the Primera Subscription.';
+            @endphp
+
+            <a href="{{ whatsapp_link('6280818978781', $joinMessage) }}"
                 :class="shown ? 'animate-up-in' : 'animate-up-out'"
                 class="group flex items-center space-x-4 mx-auto lg:mx-0 px-6 py-3 border border-everglade rounded-full w-max text-everglade delay-150">
-                <span class="font-semibold">Join Now</span>
+                <span class="font-semibold">{{ app()->getLocale() === 'id' ? 'Gabung Sekarang' : 'Join Now' }}</span>
                 <span class="w-0 group-hover:w-14 transition-all duration-300">
-                    <?xml version="1.0" encoding="UTF-8"?>
-                    <svg id="b" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 33.55 9.09">
+                    <svg id="b" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.55 9.09">
                         <g id="c" data-name="Layer 1">
-                            <path
-                                d="m28.01,0c.04,1.23.41,2.93,1.18,4.04H0v1h29.19c-.78,1.14-1.08,2.72-1.19,4.05,1.52-1.86,3.3-3.64,5.55-4.55-2.25-.94-4.11-2.62-5.55-4.54Z"
-                                style="fill: #113a3e;" />
+                            <path d="m28.01,0c.04,1.23.41,2.93,1.18,4.04H0v1h29.19c-.78,1.14-1.08,2.72-1.19,4.05,1.52-1.86,3.3-3.64,5.55-4.55-2.25-.94-4.11-2.62-5.55-4.54Z" style="fill: #113a3e;" />
                         </g>
                     </svg>
                 </span>
@@ -79,14 +79,15 @@
 
 </section>
 
-<section
-    class="bg-white pt-8 lg:pt-20 min-h-36">
+<section class="bg-white pt-8 lg:pt-20 min-h-36">
 
     <div x-intersect:enter.half="shown = true" x-intersect:leave.half="shown = false" x-data="{ shown: false }">
         <h3 class="flex flex-col items-center gap-4">
             <span class="font-serif font-semibold text-everglade text-3xl lg:text-5xl italic"
                 :class="shown ? 'animate-up-in' : 'animate-up-out'"
-                >HOW DOES IT WORKS?</span>
+            >
+                {{ app()->getLocale() === 'id' ? 'BAGAIMANA CARA KERJANYA?' : 'HOW DOES IT WORKS?' }}
+            </span>
         </h3>
     </div>
 
@@ -102,9 +103,11 @@
                     </picture>
                 </div>
                 <div :class="shown ? 'animate-up-in' : 'animate-up-out'" class="motion-delay-300">
-                    <h3 class="mb-2 font-bold text-everglade text-2xl uppercase tracking-wide">Custom<br>Your Needs</h3>
+                    <h3 class="mb-2 font-bold text-everglade text-2xl uppercase tracking-wide">
+                        {!! app()->getLocale() === 'id' ? 'Sesuaikan<br>Kebutuhan' : 'Custom<br>Your Needs' !!}
+                    </h3>
                     <p class="max-w-[180px] text-everglade text-base leading-relaxed">
-                    Tell us your requirement &amp; frequency of change
+                        {{ app()->getLocale() === 'id' ? 'Beritahu kami kebutuhan & frekuensi penggantian Anda' : 'Tell us your requirement & frequency of change' }}
                     </p>
                 </div>
             </div>
@@ -118,9 +121,11 @@
                     </picture>
                 </div>
                 <div :class="shown ? 'animate-up-in' : 'animate-up-out'" class="motion-delay-300">
-                    <h3 class="mb-2 font-bold text-everglade text-2xl uppercase tracking-wide">First<br>Delivery</h3>
+                    <h3 class="mb-2 font-bold text-everglade text-2xl uppercase tracking-wide">
+                        {!! app()->getLocale() === 'id' ? 'Pengiriman<br>Pertama' : 'First<br>Delivery' !!}
+                    </h3>
                     <p class="max-w-[180px] text-everglade text-base leading-relaxed">
-                    We arrange for first delivery and give you care tips
+                        {{ app()->getLocale() === 'id' ? 'Kami mengatur pengiriman pertama dan memberikan tips perawatan' : 'We arrange for first delivery and give you care tips' }}
                     </p>
                 </div>
             </div>
@@ -134,9 +139,11 @@
                     </picture>
                 </div>
                 <div :class="shown ? 'animate-up-in' : 'animate-up-out'" class="motion-delay-300">
-                    <h3 class="mb-2 font-bold text-everglade text-2xl uppercase tracking-wide">Easy<br>Maintenance</h3>
+                    <h3 class="mb-2 font-bold text-everglade text-2xl uppercase tracking-wide">
+                        {!! app()->getLocale() === 'id' ? 'Perawatan<br>Mudah' : 'Easy<br>Maintenance' !!}
+                    </h3>
                     <p class="max-w-[180px] text-everglade text-base leading-relaxed">
-                    Orchid requires little maintenance. You will need to water &amp; trim wilted flowers
+                        {{ app()->getLocale() === 'id' ? 'Anggrek membutuhkan sedikit perawatan. Anda hanya perlu menyiram & memotong bunga layu' : 'Orchid requires little maintenance. You will need to water & trim wilted flowers' }}
                     </p>
                 </div>
             </div>
@@ -150,9 +157,11 @@
                     </picture>
                 </div>
                 <div :class="shown ? 'animate-up-in' : 'animate-up-out'" class="motion-delay-300">
-                    <h3 class="mb-2 font-bold text-everglade text-2xl uppercase tracking-wide">Routine<br>Replenishment</h3>
+                    <h3 class="mb-2 font-bold text-everglade text-2xl uppercase tracking-wide">
+                        {!! app()->getLocale() === 'id' ? 'Pengantian<br>Rutin' : 'Routine<br>Replenishment' !!}
+                    </h3>
                     <p class="max-w-[180px] text-everglade text-base leading-relaxed">
-                    Every month we schedule and delivery fresh ones and exchange the old pots
+                        {{ app()->getLocale() === 'id' ? 'Setiap bulan kami menjadwalkan dan mengirimkan yang segar serta menukar pot lama' : 'Every month we schedule and delivery fresh ones and exchange the old pots' }}
                     </p>
                 </div>
             </div>
@@ -165,33 +174,38 @@
 <section class="space-y-16 mx-auto px-6 py-12 container">
 
     @foreach ($services as $service)
-    <div
-        @if(!$loop->last) class="pb-4 lg:pb-12 border-everglade border-b" @endif
-    >
+    <div @if(!$loop->last) class="pb-4 lg:pb-12 border-everglade border-b" @endif>
         <div class="flex sm:flex-row flex-col sm:justify-between sm:items-start gap-3 mb-6">
             <div>
-                <p class="text-teal-900 text-2xl tracking-[0.15em]">SUBSCRIPTION</p>
-                <h2 class="-mt-1 font-serif font-semibold text-teal-900 text-5xl italic">{{ $service->title }}</h2>
+                <p class="text-teal-900 text-2xl tracking-[0.15em]">{{ app()->getLocale() === 'id' ? 'LANGGANAN' : 'SUBSCRIPTION' }}</p>
+                <h2 class="-mt-1 font-serif font-semibold text-teal-900 text-5xl italic">{{ trans_field($service, 'title') ?? trans_field($service, 'name') }}</h2>
             </div>
             <p class="max-w-2xl font-semibold text-teal-900 sm:text-right leading-relaxed">
-                {{ $service->description }}
+                {{ trans_field($service, 'description') ?? trans_field($service, 'short_description') }}
             </p>
         </div>
 
         <div class="gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
 
             @foreach ($service->items as $item)
-            <!-- {{$item->title}} -->
+            @php
+                $serviceTitle = trans_field($service, 'title') ?? trans_field($service, 'name');
+                $itemTitle = trans_field($item, 'title') ?? trans_field($item, 'name');
+                $waServiceMessage = app()->getLocale() === 'id'
+                    ? "Halo, saya tertarik dengan layanan {$serviceTitle} - {$itemTitle}"
+                    : "Hello, I am interested in {$serviceTitle} - {$itemTitle}";
+            @endphp
+            
             <a
-                href="{{ whatsapp_link('6282218181660', __('general.cta_service_message', ['service' => $service->title . ' - ' . $item->title])) }}"
+                href="{{ whatsapp_link('6282218181660', $waServiceMessage) }}"
                 class="relative flex flex-col bg-everglade shadow-sm rounded-lg overflow-hidden">
                 <div class="flex-shrink-0 w-full aspect-[12/8] overflow-hidden">
-                    <img src="{{ asset($item->getFirstMediaUrl('image')) }}" alt="" class="rounded-lg w-full h-full object-cover">
+                    <img src="{{ asset($item->getFirstMediaUrl('image')) }}" alt="{{ $itemTitle }}" class="rounded-lg w-full h-full object-cover">
                 </div>
                 <div class="flex flex-col justify-center bg-everglade py-3 h-full text-white text-center">
-                    <p class="font-bold text-lg">{{ $item->title }}</p>
-                    @if ($item->subtitle)
-                        <p class="font-medium text-sm">{{ $item->subtitle }}</p>
+                    <p class="font-bold text-lg">{{ $itemTitle }}</p>
+                    @if ($item->subtitle || trans_field($item, 'subtitle'))
+                        <p class="font-medium text-sm">{{ trans_field($item, 'subtitle') ?? $item->subtitle }}</p>
                     @endif
                 </div>
             </a>
@@ -212,10 +226,10 @@
         <h3 class="hidden lg:flex flex-col items-center gap-4">
             <span class="text-2xl"
                 :class="shown ? 'animate-up-in' : 'animate-up-out'"
-                >LOVED BY</span>
+            >{{ app()->getLocale() === 'id' ? 'DISUKAI OLEH' : 'LOVED BY' }}</span>
             <span class="font-serif font-semibold text-everglade text-5xl italic"
                 :class="shown ? 'animate-up-in' : 'animate-up-out'"
-                >OUR CUSTOMERS</span>
+            >{{ app()->getLocale() === 'id' ? 'PELANGGAN KAMI' : 'OUR CUSTOMERS' }}</span>
         </h3>
     </div>
 
@@ -224,10 +238,10 @@
         <h3 class="lg:hidden flex flex-col items-center gap-4 text-center">
             <span class="text-2xl"
                 :class="shown ? 'animate-up-in' : 'animate-up-out'"
-                >LOVED BY</span>
+            >{{ app()->getLocale() === 'id' ? 'DISUKAI OLEH' : 'LOVED BY' }}</span>
             <span class="font-serif font-semibold text-everglade text-5xl italic"
                 :class="shown ? 'animate-up-in' : 'animate-up-out'"
-                >OUR CUSTOMERS</span>
+            >{{ app()->getLocale() === 'id' ? 'PELANGGAN KAMI' : 'OUR CUSTOMERS' }}</span>
         </h3>
     </div>
 
@@ -247,7 +261,6 @@
                     <!-- Testimonial -->
                     <p class="text-everglade text-lg">"I am absolutely delighted with the orchids I received from Primera Orchids! The quality and freshness of the blooms exceeded my expectations. The arrangement was stunning, and it brought so much joy to my home. I highly recommend Primera Orchids for anyone looking for exquisite floral arrangements."</p>
                 </div>
-
             </div>
 
             <div class="relative flex lg:flex-row flex-col bg-soft-linen-100 px-4 pt-4 lg:pt-16 pb-4 rounded-2xl max-w-2xl">
@@ -262,13 +275,9 @@
                     <!-- Testimonial -->
                     <p class="text-everglade text-lg">"Primera Orchids never disappoints! The orchids I ordered were delivered promptly and in perfect condition. The blooms were vibrant and long-lasting, and the arrangement was simply beautiful. I am extremely satisfied with my purchase and will definitely order again!"</p>
                 </div>
-
             </div>
 
-
-
         </div>
-
 
     </div>
 

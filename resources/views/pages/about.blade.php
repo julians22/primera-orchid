@@ -117,8 +117,8 @@
             @foreach ($best_seller_products as $product)
                 <x-product-card
                     :image="asset('img/product-1.jpg')"
-                    name="{{ $product->name }}"
-                    href="{{ route('product.show', $product->slug) }}"
+                    :name="trans_field($product, 'name')"
+                    :href="route('product.show', trans_field($product, 'slug') ?? $product->id)"
                 />
             @endforeach
         </div>

@@ -13,7 +13,9 @@
         <div class="space-y-10 mt-10">
 
             <!-- Title -->
-            <h1 class="mx-auto max-w-3xl font-serif font-semibold text-everglade lg:text-7xl text-center italic">{{ $article->title }}</h1>
+            <h1 class="mx-auto max-w-3xl font-serif font-semibold text-everglade lg:text-7xl text-center italic">
+                {{ trans_field($article, 'title') }}
+            </h1>
 
             <!-- Line -->
             <div class="bg-everglade mx-auto rounded-full max-w-3xs h-1"></div>
@@ -21,20 +23,23 @@
             <!-- Contents -->
             <div>
                 <!-- Description -->
-                <p class="text-everglade">{{ $article->short_description }}</p>
+                <p class="text-everglade">
+                    {{ trans_field($article, 'short_description') ?? trans_field($article, 'excerpt') }}
+                </p>
 
                 <!-- Body Content -->
-                {!! $article->body_content !!}
+                {!! trans_field($article, 'body_content') ?? trans_field($article, 'body') !!}
             </div>
         </div>
 
-        <div>
-            Tags: {{ $article->tags->pluck('title')->join(', ') }}
-        </div>
+        @if ($article->tags && $article->tags->isNotEmpty())
+            <div>
+                Tags: {{ $article->tags->map(fn($tag) => trans_field($tag, 'title') ?? trans_field($tag, 'name'))->filter()->join(', ') }}
+            </div>
+        @endif
     </div>
 
 </article>
-
 
 <section class="relative bg-stone-50 py-8 lg:py-20 min-h-36">
 
@@ -42,18 +47,17 @@
 
         <!-- Previous Article -->
         @if ($article->previousArticle())
-            <a href="{{ route('article.show', $article->previousArticle()->slug) }}" class="flex justify-self-start items-center space-x-4 px-2 py-1 border border-everglade rounded-full w-max text-everglade">
-                <span class="font-semibold">Previous Article</span>
+            <a href="{{ route('article.show', trans_field($article->previousArticle(), 'slug') ?? $article->previousArticle()->id) }}" class="flex justify-self-start items-center space-x-4 px-2 py-1 border border-everglade rounded-full w-max text-everglade">
+                <span class="font-semibold">{{ app()->getLocale() === 'id' ? 'Artikel Sebelumnya' : 'Previous Article' }}</span>
             </a>
         @endif
 
         <!-- Next Article -->
         @if ($article->nextArticle())
-            <a href="{{ route('article.show', $article->nextArticle()->slug) }}" class="flex justify-self-end items-center space-x-4 col-start-2 px-2 py-1 border border-everglade rounded-full w-max text-everglade">
-                <span class="font-semibold">Next Article</span>
+            <a href="{{ route('article.show', trans_field($article->nextArticle(), 'slug') ?? $article->nextArticle()->id) }}" class="flex justify-self-end items-center space-x-4 col-start-2 px-2 py-1 border border-everglade rounded-full w-max text-everglade">
+                <span class="font-semibold">{{ app()->getLocale() === 'id' ? 'Artikel Selanjutnya' : 'Next Article' }}</span>
             </a>
         @endif
-
 
     </div>
 

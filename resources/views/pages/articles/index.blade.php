@@ -11,7 +11,7 @@
             :items="[
                 ['label' => 'Home', 'href' => url('/')],
                 ['label' => 'Articles', 'href' => route('article.index')],
-                ['label' => 'All Articles'],
+                ['label' => app()->getLocale() === 'id' ? 'Semua Artikel' : 'All Articles'],
             ]"
         />
     </div>
@@ -21,21 +21,22 @@
 
         <div class="gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             @foreach ($articles as $article)
-            <!-- Article Card 1-->
+            <!-- Article Card {{ $loop->iteration }} -->
             <article
                 x-intersect.once="shown = true"
                 x-data="{ shown: false }"
                 class="flex flex-col gap-4 bg-soft-linen-50 rounded-2xl overflow-hidden">
                 <div class="rounded-xl w-full aspect-[20/9] overflow-hidden">
-                    <img src="{{ asset('img/article-1.png') }}" alt="" class="w-full h-full object-cover">
+                    <img src="{{ asset('img/article-1.png') }}" alt="{{ trans_field($article, 'title') }}" class="w-full h-full object-cover">
                 </div>
                 <div class="flex flex-col gap-2 px-8 py-4">
                     <p class="text-everglade text-sm"
                         :class="shown ? 'animate-up-in' : 'animate-up-out'"
-                    >{{ $article->categories->first()->title ?? '' }}</p>
+                    >{{ trans_field($article->categories->first(), 'title') ?? trans_field($article->categories->first(), 'name') ?? '' }}</p>
+                    
                     <h3 class="font-semibold text-everglade text-2xl"
                         :class="shown ? 'animate-up-in' : 'animate-up-out'"
-                        >{{ $article->title }}</h3>
+                    >{{ trans_field($article, 'title') }}</h3>
 
                     <!-- Line -->
                     <div class="bg-everglade rounded-full w-full h-px"></div>
@@ -43,13 +44,13 @@
                     <!-- Description -->
                     <p class="text-everglade"
                         :class="shown ? 'animate-up-in' : 'animate-up-out'"
-                    >{{ $article->short_description }}</p>
+                    >{{ \Illuminate\Support\Str::limit(strip_tags((string) (trans_field($article, 'short_description') ?? trans_field($article, 'excerpt') ?? trans_field($article, 'body'))), 120) }}</p>
 
                     <!-- Read More Button -->
-                    <a href="{{ route('article.show', $article->slug) }}"
+                    <a href="{{ route('article.show', trans_field($article, 'slug') ?? $article->id) }}"
                         :class="shown ? 'animate-up-in' : 'animate-up-out'"
                         class="flex items-center space-x-4 px-2 py-1 border border-everglade rounded-full w-max text-everglade">
-                        <span class="font-semibold">Read More</span>
+                        <span class="font-semibold">{{ app()->getLocale() === 'id' ? 'Baca Selengkapnya' : 'Read More' }}</span>
                     </a>
                 </div>
             </article>
@@ -61,7 +62,6 @@
         </div>
 
     </div>
-
 
 </section>
 

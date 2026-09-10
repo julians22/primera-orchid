@@ -16,9 +16,37 @@
         }
     }
 
-    $buildCollectionUrl = function ($collection) {
-        $slug = $collection->slug ?? $collection->code ?? $collection->title ?? $collection->name ?? $collection->id;
-        return url('/collection/' . urlencode((string) $slug));
+    $currentLocale = app()->getLocale();
+
+    $buildCollectionUrl = function ($collection) use ($currentLocale) {
+        // Ambil nilai slug berdasarkan JSON locale aktif ('en' atau 'id')
+        $rawSlug = $collection->slug ?? $collection->code ?? $collection->title ?? $collection->name ?? $collection->id;
+
+        if (is_string($rawSlug) && (str_starts_with($rawSlug, '{') || str_starts_with($rawSlug, '['))) {
+            $decoded = json_decode($rawSlug, true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                $rawSlug = $decoded[$currentLocale] ?? $decoded['en'] ?? reset($decoded);
+            }
+        } elseif (is_array($rawSlug)) {
+            $rawSlug = $rawSlug[$currentLocale] ?? $rawSlug['en'] ?? reset($rawSlug);
+        }
+
+        return url('/collection/' . urlencode((string) $rawSlug));
+    };
+
+    $getTranslatableText = function ($model, $attribute) use ($currentLocale) {
+        $value = $model->{$attribute} ?? null;
+
+        if (is_string($value) && (str_starts_with($value, '{') || str_starts_with($value, '['))) {
+            $decoded = json_decode($value, true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                return $decoded[$currentLocale] ?? $decoded['en'] ?? reset($decoded);
+            }
+        } elseif (is_array($value)) {
+            return $value[$currentLocale] ?? $value['en'] ?? reset($value);
+        }
+
+        return $value;
     };
 @endphp
 
@@ -53,9 +81,19 @@
             </div>
 
             <div class="flex justify-end space-x-1">
-                <span class="font-bold text-white">EN</span>
+                <a
+                    href="{{ route('lang.switch', 'en') }}"
+                    class="text-white {{ $currentLocale === 'en' ? 'font-bold' : 'opacity-80 hover:opacity-100' }}"
+                >
+                    EN
+                </a>
                 <span class="text-white text-sm lg:text-base">|</span>
-                <span class="text-white text-sm lg:text-base">ID</span>
+                <a
+                    href="{{ route('lang.switch', 'id') }}"
+                    class="text-white {{ $currentLocale === 'id' ? 'font-bold' : 'opacity-80 hover:opacity-100' }}"
+                >
+                    ID
+                </a>
             </div>
         </div>
     </div>
@@ -81,7 +119,11 @@
                             <div class="overflow-hidden rounded-xl border border-everglade/10 bg-white shadow-lg">
                                 @foreach ($productCollections as $collection)
                                     @php
-                                        $collectionLabel = $collection->name ?? $collection->title ?? $collection->slug ?? $collection->code ?? $collection->id;
+                                        $collectionLabel = $getTranslatableText($collection, 'name') 
+                                            ?? $getTranslatableText($collection, 'title') 
+                                            ?? $getTranslatableText($collection, 'slug') 
+                                            ?? $collection->code 
+                                            ?? $collection->id;
                                         $collectionUrl = $buildCollectionUrl($collection);
                                     @endphp
                                     <a
@@ -101,7 +143,7 @@
                 </li>
 
                 <li class="hidden lg:block">
-                    {{-- Logo Curcle and absolute position half is outside bottom --}}
+                    {{-- Logo Circle and absolute position half is outside bottom --}}
                     <a href="{{ route('home') }}" class="block relative w-45">
                         <div class="logo-wrapper">
                             <img src="{{ asset('img/logo-persegi.png') }}" class="w-full" alt="" width="230">
@@ -248,7 +290,11 @@
                         >
                             @foreach ($productCollections as $collection)
                                 @php
-                                    $collectionLabel = $collection->name ?? $collection->title ?? $collection->slug ?? $collection->code ?? $collection->id;
+                                    $collectionLabel = $getTranslatableText($collection, 'name') 
+                                        ?? $getTranslatableText($collection, 'title') 
+                                        ?? $getTranslatableText($collection, 'slug') 
+                                        ?? $collection->code 
+                                        ?? $collection->id;
                                     $collectionUrl = $buildCollectionUrl($collection);
                                 @endphp
 
@@ -279,9 +325,19 @@
             </ul>
 
             <div class="flex justify-center items-center gap-x-2 mt-8 font-bold text-white text-lg">
-                <span class="pb-0.5 border-white border-b-2">EN</span>
+                <a
+                    href="{{ route('lang.switch', 'en') }}"
+                    class="{{ $currentLocale === 'en' ? 'pb-0.5 border-white border-b-2' : 'opacity-80' }}"
+                >
+                    EN
+                </a>
                 <span>|</span>
-                <span>ID</span>
+                <a
+                    href="{{ route('lang.switch', 'id') }}"
+                    class="{{ $currentLocale === 'id' ? 'pb-0.5 border-white border-b-2' : 'opacity-80' }}"
+                >
+                    ID
+                </a>
             </div>
 
             <div class="flex justify-center items-center gap-x-6 mt-6">
