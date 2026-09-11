@@ -23,37 +23,23 @@
             <h1 class="inline-flex flex-col items-start gap-4 lg:mt-40 text-everglade">
                 <span class="opacity-0 text-2xl motion-delay-500"
                     :class="shown ? 'animate-opacity-in opacity-100' : 'animate-opacity-out'"
-                    >WE DEDICATED TO BRINGING</span>
+                    >{!! __('about.hero.line1') !!}</span>
 
                 <span
                     :class="shown ? 'animate-opacity-in opacity-100' : 'animate-opacity-out'"
                     class="opacity-0 font-serif font-semibold text-5xl lg:text-7xl italic motion-delay-700">
-                    THE TIMELESS
-                    ELEGANCE OF
-                    ORCHIDS
+                    {!! __('about.hero.line2') !!}
                 </span>
 
                 <span class="text-2xl motion-delay-700"
                     :class="shown ? 'animate-opacity-in' : 'animate-opacity-out'"
-                    >INTO EVERYDAY SPACES.</span>
+                    >{!! __('about.hero.line3') !!}</span>
             </h1>
 
             <p
                 :class="shown ? 'animate-opacity-in' : 'animate-opacity-out'"
                 class="text-everglade text-xl leading-relaxed">
-                Specializing in premium orchid plants and refined
-                arrangements, Primera curates each bloom to highlight
-                the natural beauty, simplicity, and sophistication that
-                orchids represent. With thoughtfully designed packaging
-                and carefully selected varieties, Primera transforms
-                orchids into meaningful gifts and stylish decorative
-                elements for homes, offices, and special occasions.
-                <br>
-                <br>
-                By combining quality plants, elegant presentation, and a
-                modern aesthetic, Primera Orchid aims to make the
-                beauty of orchids more accessible while celebrating
-                nature’s most graceful flower.
+                {!! __('about.hero.line4') !!}
             </p>
 
         </div>

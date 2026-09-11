@@ -20,10 +20,10 @@ class Service extends Model
         'description',
     ];
 
-    protected $casts = [
-        'title' => 'json',
-        'description' => 'json',
-    ];
+    // protected $casts = [
+    //     'title' => 'json',
+    //     'description' => 'json',
+    // ];
 
     /**
      * Get the items for this service.

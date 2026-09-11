@@ -6,13 +6,13 @@
     <div class="flex lg:flex-row flex-col justify-between mx-auto container">
         <div class="flex flex-col gap-4 lg:max-w-1/3">
             <img src="{{ asset('img/logo-persegi.png') }}" alt="" width="230">
-            <p class="text-white"><strong>#1 INDONESIAN MINI ORCHIDS IN A BOX</strong></p>
+            <p class="text-white"><strong>{{ __('components.footer.line1') }}</strong></p>
 
             <ul class="space-y-4 py-4 border-white border-t border-b">
                 <li class="flex gap-3">
                     <x-simpleline-location-pin class="fill-white outline-white size-6"/>
                     <div>
-                        <a target="_blank" href="https://maps.app.goo.gl/ABCpDdgJFXedJHVn8" class="text-white :underline">Jl. Polisi Istimewa No.1 C <br> Keputran, Kec. Tegalsari, Surabaya, Jawa Timur 60265</a>
+                        <a target="_blank" href="https://maps.app.goo.gl/ABCpDdgJFXedJHVn8" class="text-white :underline">{{ __('components.footer.line2') }}</a>
                     </div>
                 </li>
                 <li class="flex gap-3">
@@ -28,7 +28,7 @@
 
 
         <div class="flex flex-col gap-8 lg:max-w-1/3">
-            <p class="font-bold text-white text-lg">Get a first peek at new products, special offers, and so much more</p>
+            <p class="font-bold text-white text-lg">{{ __('components.footer.line3') }}</p>
 
             <form action="#" class="inline-flex lg:flex-row flex-col gap-4">
                 <input type="text" class="bg-white px-3 py-1.5 rounded-full focus:outline-none" placeholder="Email Address">

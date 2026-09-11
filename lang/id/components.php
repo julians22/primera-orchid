@@ -2,18 +2,18 @@
 
 return [
     'bestSeller' => [
-        'line1' => 'Our',
-        'line2' => 'Best Seller',
+        'line1' => 'Koleksi',
+        'line2' => 'Terlaris Kami',
     ],
 
     'ourCustomers' => [
-        'line1' => 'LOVED BY',
-        'line2' => 'OUR CUSTOMERS',
+        'line1' => 'DICINTAI OLEH',
+        'line2' => 'PELANGGAN KAMI',
     ],
 
     'footer' => [
         'line1' => '#1 INDONESIAN MINI ORCHIDS IN A BOX',
         'line2' => 'Jl. Polisi Istimewa No.1 C <br> Keputran, Kec. Tegalsari, Surabaya, Jawa Timur 60265',
-        'line3' => 'Get a first peek at new products, special offers, and so much more'
+        'line3' => 'Dapatkan bocoran pertama tentang produk baru, penawaran khusus, dan masih banyak lagi'
     ],
 ];

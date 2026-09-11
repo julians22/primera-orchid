@@ -9,8 +9,8 @@ return [
     ],
 
     'event' => [
-        'line1' => 'NEW COLLECTION',
-        'line2' => 'CHRISTMAS EDITION',
+        'line1' => 'KOLEKSI TERBARU',
+        'line2' => 'EDISI NATAL',
         'line3' => 'Wrapped in warmth, graced with elegance our orchids for your Christmas season. Elevate your holiday moments with the serene beauty of Christmas orchids.',
         'line4' => 'Pre Order Now',
     ],

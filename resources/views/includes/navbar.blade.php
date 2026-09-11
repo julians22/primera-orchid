@@ -69,7 +69,9 @@
             <div class="flex gap-x-2 lg:gap-x-4">
                 {{-- Social Icons --}}
                 <span>
-                    <x-si-instagram class="fill-white outline-white size-3 lg:size-5"/>
+                    <a href="https://www.instagram.com/primeraorchid/" target="_blank" rel="noopener noreferrer">
+                        <x-si-instagram class="fill-white outline-white size-3 lg:size-5" />
+                    </a>
                 </span>
                 <span>
                     <x-si-x class="fill-white outline-white size-3 lg:size-5"/>
@@ -476,7 +478,9 @@
             <div class="flex justify-center items-center gap-x-6 mt-6">
 
                 <span>
-                    <x-si-instagram class="fill-white outline-white size-6"/>
+                    <a href="https://www.instagram.com/primeraorchid/" target="_blank" rel="noopener noreferrer">
+                        <x-si-instagram class="fill-white outline-white size-3 lg:size-5" />
+                    </a>
                 </span>
 
                 <span>

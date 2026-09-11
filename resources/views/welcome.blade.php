@@ -20,13 +20,12 @@
                     <div class="content-container">
                         <div class="relative lg:col-span-6 pb-6 overflow-hidden">
                             <div class="bottom-28 lg:bottom-10 absolute flex flex-col gap-2">
-                                <p class="text-everglade-500 text-lg motion-duration-700 swiper-animate">PREMIUM FRESH ORCHIDS, <br>CRAFTED WITH PASSION IN SURABAYA</p>
-                                <p class="font-serif font-semibold text-everglade-500 text-4xl lg:text-8xl italic motion-duration-700 motion-delay-200 swiper-animate">ORCHIDS PERFECTION</p>
-                                <p class="text-everglade-500 text-lg motion-duration-700 motion-delay-300 swiper-animate">At Primera Orchids, every bloom is thoughtfully curated to
-                                    bring beauty, freshness, and refinement into your space.</p>
-
+                                <p class="text-everglade-500 text-lg motion-duration-700 swiper-animate">{!! __('home.hero.line1') !!}</p>
+                                <p class="font-serif font-semibold text-everglade-500 text-4xl lg:text-8xl italic motion-duration-700 motion-delay-200 swiper-animate">{!! __('home.hero.line2') !!}</p>
+                                <p class="text-everglade-500 text-lg motion-duration-700 motion-delay-300 swiper-animate">{!! __('home.hero.line3') !!}</p>
+                                
                                 <a href="#" class="group flex items-center space-x-4 px-6 py-3 border border-everglade rounded-full w-max text-everglade motion-duration-1000 motion-delay-300 swiper-animate">
-                                    <span class="font-semibold">Discover Now</span>
+                                    <span class="font-semibold">{!! __('home.hero.line4') !!}</span>
                                     <span class="w-0 group-hover:w-14 transition-all duration-300">
                                         <?xml version="1.0" encoding="UTF-8"?>
                                         <svg id="b" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg"
@@ -63,14 +62,14 @@
             ">
     <div class="grid grid-cols-12 mx-auto container">
         <div class="flex flex-col gap-4 col-span-12 lg:col-span-4 lg:col-start-7 pt-10 lg:pt-40 pb-10 lg:pb-0">
-            <p class="text-white text-xl" :class="shown ? 'animate-up-in' : 'animate-up-out'">NEW COLLECTION</p>
-            <h2 class="font-serif text-white text-5xl lg:text-7xl italic delay-100" :class="shown ? 'animate-up-in' : 'animate-up-out'">CHRISTMAS EDITION</h2>
-            <p class="text-white delay-150" :class="shown ? 'animate-up-in' : 'animate-up-out'">Wrapped in warmth, graced with elegance our orchids for your Christmas season. Elevate your holiday moments with the serene beauty of Christmas orchids.</p>
+            <p class="text-white text-xl" :class="shown ? 'animate-up-in' : 'animate-up-out'">{{ __('home.event.line1') }}</p>
+            <h2 class="font-serif text-white text-5xl lg:text-7xl italic delay-100" :class="shown ? 'animate-up-in' : 'animate-up-out'">{{ __('home.event.line2') }}</h2>
+            <p class="text-white delay-150" :class="shown ? 'animate-up-in' : 'animate-up-out'">{{ __('home.event.line3') }}</p>
 
             <a href="#"
                 :class="shown ? 'animate-up-in' : 'animate-up-out'"
                 class="group flex items-center space-x-4 px-6 py-3 border border-white rounded-full w-max text-white delay-200">
-                <span class="font-semibold text-center">Pre Order Now</span>
+                <span class="font-semibold text-center">{{ __('home.event.line4') }}</span>
                 <span class="w-0 group-hover:w-14 transition-all duration-300">
                     <?xml version="1.0" encoding="UTF-8"?>
                     <svg class="fill-white" id="b" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +143,7 @@
 
 <x-subcribe-hero/>
 
-<x-customers-section />
+<x-customers-section :testimonials="$testimonials" />
 
 <section class="bg-neutral-100 py-8 lg:py-20 min-h-36 overflow-hidden">
 
