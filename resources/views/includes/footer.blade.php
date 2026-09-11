@@ -1,3 +1,6 @@
+@php
+    $isId = app()->getLocale() === 'id';
+@endphp
 <footer class="bg-everglade pt-16 pb-14">
 
     <div class="flex lg:flex-row flex-col justify-between mx-auto container">
@@ -32,11 +35,11 @@
                 <button type="submit" class="px-3 py-1.5 border border-white rounded-full text-white">Sign up</button>
             </form>
             <ul class="gap-4 grid grid-cols-3">
-                <li><a href="#" class="font-semibold text-white">About Us</a></li>
-                <li><a href="#" class="font-semibold text-white">Products</a></li>
-                <li><a href="#" class="font-semibold text-white">Articles</a></li>
-                <li><a href="#" class="font-semibold text-white">Subscription</a></li>
-                <li><a href="#" class="font-semibold text-white">Contact</a></li>
+                <li><a href="{{ $isId ? url('/tentang-kami') : route('about') }}" class="font-semibold text-white">{{ __('nav.about') }}</a></li>
+                <li><a href="{{ $isId ? url('/koleksi') : route('collection.index') }}" class="font-semibold text-white">{{ __('nav.collections') }}</a></li>
+                <li><a href="{{ $isId ? url('/artikel') : route('article.index') }}" class="font-semibold text-white">{{ __('nav.articles') }}</a></li>
+                <li><a href="{{ $isId ? url('/layanan') : route('services') }}" class="font-semibold text-white">{{ __('nav.subscription') }}</a></li>
+                <li><a href="{{ $isId ? url('/kontak') : route('contact') }}" class="font-semibold text-white">{{ __('nav.contact') }}</a></li>
                 <li><a href="#" class="font-semibold text-white">Shop</a></li>
             </ul>
         </div>

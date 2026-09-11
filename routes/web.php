@@ -9,6 +9,7 @@ use App\Models\Article;
 use App\Models\Collection;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\SearchPage;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -29,6 +30,8 @@ Route::get('article', [ArticleController::class, 'index'])->name('article.index'
 
 Route::get('artikel/{article}', [ArticleController::class, 'show']);
 Route::get('article/{article}', [ArticleController::class, 'show'])->name('article.show');
+
+Route::get('/search', SearchPage::class)->name('search');
 
 Route::get('kontak', fn () => view('pages.contact'));
 Route::get('contact', fn () => view('pages.contact'))->name('contact');

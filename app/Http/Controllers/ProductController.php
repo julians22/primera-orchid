@@ -9,7 +9,9 @@ class ProductController extends Controller
 {
     public function index() 
     {
-        return view('pages.products.index');
+        $locale = app()->getLocale();
+        $collections = Collection::all();
+        return view('pages.products.index', compact('collections'));
     }
 
     public function collection(string $collection) 

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@php
+    $isId = app()->getLocale() === 'id';
+@endphp
+
 @section('content')
 
 <section class="relative py-8 lg:py-20 min-h-36">
@@ -9,8 +13,8 @@
         <x-utils.breadcrumbs
             class="text-xl"
             :items="[
-                ['label' => 'Home', 'href' => url('/')],
-                ['label' => 'Articles', 'href' => route('article.index')],
+                ['label' => app()->getLocale() === 'id' ? 'Beranda' : 'Home', 'href' => url('/')],
+                ['label' => app()->getLocale() === 'id' ? 'Artikel' : 'Articles', 'href' => $isId ? url('/artikel') : route('article.index')],
                 ['label' => app()->getLocale() === 'id' ? 'Semua Artikel' : 'All Articles'],
             ]"
         />

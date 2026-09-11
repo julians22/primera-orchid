@@ -22,7 +22,7 @@
         <x-utils.breadcrumbs
             class="text-xl"
             :items="[
-                ['label' => 'Home', 'href' => url('/')],
+                ['label' => __('nav.home'), 'href' => url('/')],
                 ['label' => trans_field($primaryCollection, 'name'), 'href' => route('collection.show', trans_field($primaryCollection, 'slug') ?? $primaryCollection->id)],
                 ['label' => trans_field($product, 'name')],
             ]"
