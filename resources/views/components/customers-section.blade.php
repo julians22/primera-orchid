@@ -1,5 +1,4 @@
-<section
-    class="bg-white py-8 lg:py-20 min-h-36">
+<section class="bg-white py-8 lg:py-20 min-h-36">
 
     <!-- Section Title Desktop -->
     <div x-intersect:enter.half="shown = true" x-intersect:leave.half="shown = false" x-data="{ shown: false }">
@@ -25,28 +24,34 @@
         </h3>
     </div>
 
-
     <div class="mx-auto pt-10 lg:pt-20 container">
         <div class="flex lg:flex-row flex-col justify-center gap-4">
 
             @foreach($testimonials as $item)
                 @php
+                    // 1. Handle Avatar
                     $avatarUrl = is_array($item) 
                         ? $item['avatar'] 
                         : ($item->avatar ? asset('storage/' . $item->avatar) : asset('img/customer-1.png'));
 
+                    // 2. Handle Name & Location
                     $name = is_array($item) ? $item['name'] : $item->name;
                     $location = is_array($item) ? $item['location'] : $item->location;
 
+                    // 3. Handle Content Multilingual
                     if (is_array($item)) {
+                        // Jika data Dummy (Array biasa)
                         $locale = app()->getLocale();
                         $text = $item['content'][$locale] ?? ($item['content']['en'] ?? ($item['content']['id'] ?? ''));
                     } else {
-                        $text = $item- >content;
-                        
+                        // Jika Model Eloquent (Spatie Translatable)
+                        $text = $item->content;
+
+                        // Fallback jika bahasa aktif di DB kosong
                         if (empty($text)) {
-                            $text = $item->getTranslation('content', 'en', false) 
-                                ?: $item->getTranslation('content', 'id', false);
+                            $enText = $item->getTranslation('content', 'en', false);
+                            $idText = $item->getTranslation('content', 'id', false);
+                            $text = !empty($enText) ? $enText : $idText;
                         }
                     }
                 @endphp
