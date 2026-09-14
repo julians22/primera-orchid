@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\Collection;
 use App\Models\Product;
 use App\Models\Testimonial;
+use App\Models\PageSetting;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -14,7 +15,8 @@ class HomeController extends Controller
      * Handle the incoming request.
      */
     public function __invoke(Request $request)
-    {
+    {   
+
         $best_seller_products = Product::where('is_best_seller', true)
             ->latest()
             ->take(4)
@@ -53,6 +55,48 @@ class HomeController extends Controller
             ]);
         }
 
-        return view('welcome', compact('best_seller_products', 'collections', 'latest_articles', 'testimonials'));
+        $meta = $this->getMeta();
+
+        return view('welcome', compact('best_seller_products', 'collections', 'latest_articles', 'testimonials', 'meta'));
+    }
+
+    private function getMeta(): array
+    {
+        $locale = app()->getLocale();
+
+        $seoRecord = PageSetting::where('page_key', 'home')
+            ->where('section_key', 'seo_meta')
+            ->first();
+
+        $payload = $seoRecord->payload ?? [];
+
+        $getString = function ($value) use ($locale) {
+            if (is_string($value)) {
+                return $value;
+            }
+
+            if (is_array($value)) {
+                return $value[$locale] ?? reset($value) ?? '';
+            }
+
+            return '';
+        };
+
+        $title = $getString(
+            $payload["meta_title_{$locale}"]
+                ?? $payload['meta_title_en']
+                ?? null
+        );
+
+        $description = $getString(
+            $payload["meta_description_{$locale}"]
+                ?? $payload['meta_description_en']
+                ?? null
+        );
+
+        return [
+            'title' => $title ?: 'Primera Orchid - Home',
+            'description' => $description ?: 'Welcome to Primera Orchid official website.',
+        ];
     }
 }

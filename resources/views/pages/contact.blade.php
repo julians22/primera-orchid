@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+{{-- Meta SEO Dinamis --}}
+@section('meta_title', $meta['title'])
+@section('meta_description', $meta['description'])
+
 @section('content')
 
 <section class="z-0 relative bg-soft-linen-50 w-full aspect-[20/6] overflow-y-hidden">

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+{{-- Meta SEO Dinamis --}}
+@section('meta_title', $meta['title'])
+@section('meta_description', $meta['description'])
+
 @section('content')
 <section class="relative py-8 lg:py-20 min-h-36">
     <picture>

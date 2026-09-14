@@ -4,10 +4,17 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Primera Orchid') }}</title>
+        {{-- Meta SEO Dinamis --}}
+        <title>
+            @hasSection('meta_title')
+                @yield('meta_title') - {{ config('app.name', 'Primera Orchid') }}
+            @else
+                {{ config('app.name', 'Primera Orchid') }}
+            @endif
+        </title>
+        <meta name="description" content="@yield('meta_description', 'Welcome to Primera Orchid - Your Trusted Floral Partner.')">
 
         @if (!app()->environment('local'))
-
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-7CF4P8K59S"></script>
         <script>
@@ -17,7 +24,6 @@
 
             gtag('config', 'G-7CF4P8K59S');
         </script>
-
         @endif
 
         <!-- Fonts -->

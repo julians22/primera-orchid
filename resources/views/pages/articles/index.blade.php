@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+{{-- Meta SEO Dinamis --}}
+@section('meta_title', $meta['title'])
+@section('meta_description', $meta['description'])
+
 @php
     $isId = app()->getLocale() === 'id';
 @endphp

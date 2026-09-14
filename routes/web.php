@@ -35,8 +35,8 @@ Route::get('article/{article}', [ArticleController::class, 'show'])->name('artic
 
 Route::get('/search', SearchPage::class)->name('search');
 
-Route::get('kontak', fn () => view('pages.contact'));
-Route::get('contact', fn () => view('pages.contact'))->name('contact');
+Route::get('kontak', ContactController::class); 
+Route::get('contact', ContactController::class) ->name('contact');
 
 Route::get('layanan', ServiceController::class);
 Route::get('services', ServiceController::class)->name('services');

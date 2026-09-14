@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Service;
 use App\Models\Testimonial;
+use App\Models\PageSetting;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -39,6 +40,48 @@ class ServiceController extends Controller
         }
 
         $services = Service::with('items')->get();
-        return view('pages.services', compact('services', 'testimonials'));
+
+        $meta = $this->getMeta();
+        return view('pages.services', compact('services', 'testimonials', 'meta'));
+    }
+
+    private function getMeta(): array
+    {
+        $locale = app()->getLocale();
+
+        $seoRecord = PageSetting::where('page_key', 'subscription')
+            ->where('section_key', 'seo_meta')
+            ->first();
+
+        $payload = $seoRecord->payload ?? [];
+
+        $getString = function ($value) use ($locale) {
+            if (is_string($value)) {
+                return $value;
+            }
+
+            if (is_array($value)) {
+                return $value[$locale] ?? reset($value) ?? '';
+            }
+
+            return '';
+        };
+
+        $title = $getString(
+            $payload["meta_title_{$locale}"]
+                ?? $payload['meta_title_en']
+                ?? null
+        );
+
+        $description = $getString(
+            $payload["meta_description_{$locale}"]
+                ?? $payload['meta_description_en']
+                ?? null
+        );
+
+        return [
+            'title' => $title ?: 'Subscription',
+            'description' => $description ?: 'Welcome to Primera Orchid official website.',
+        ];
     }
 }
