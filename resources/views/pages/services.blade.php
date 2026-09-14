@@ -285,7 +285,12 @@
                 </div>
 
                 <p class="max-w-2xl font-semibold text-teal-900 sm:text-right leading-relaxed">
-                    {{ trans_field($service, 'description') ?? trans_field($service, 'short_description') }}
+                    {{ 
+                        trans_field($service, 'description') 
+                        ?? data_get($service->description, 'en') 
+                        ?? trans_field($service, 'short_description') 
+                        ?? data_get($service->short_description, 'en') 
+                    }}
                 </p>
 
             </div>
@@ -309,6 +314,7 @@
                     <a
                         href="{{ whatsapp_link('6282218181660', $waServiceMessage) }}"
                         class="relative flex flex-col bg-everglade shadow-sm rounded-lg overflow-hidden"
+                        target="_blank"
                     >
                         <div class="flex-shrink-0 w-full aspect-[12/8] overflow-hidden">
                             <img

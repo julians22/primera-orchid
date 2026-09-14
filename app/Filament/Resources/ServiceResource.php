@@ -14,6 +14,7 @@ use Filament\Actions\EditAction;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -40,11 +41,18 @@ class ServiceResource extends Resource
                 TextInput::make('title')
                     ->label('Title')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->columnSpanFull(), 
+                Grid::make(2)
+                    ->schema([
+                        Textarea::make('description.en')
+                            ->label('Description (EN)')
+                            ->rows(4),
 
-                Textarea::make('description')
-                    ->label('Description')
-                    ->rows(4)
+                        Textarea::make('description.id')
+                            ->label('Description (ID)')
+                            ->rows(4),
+                    ])
                     ->columnSpanFull(),
             ]);
     }
@@ -58,10 +66,14 @@ class ServiceResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('description')
-                    ->label('Description')
+                TextColumn::make('description.en')
+                    ->label('Description (EN)')
+                    ->getStateUsing(fn (Service $record) => $record->description['en'] ?? '-')
                     ->wrap()
-                    ->limit(80),
+                    ->limit(80)
+                    ->searchable(query: function ($query, string $search) {
+                        return $query->where('description', 'like', "%{$search}%");
+                    }),
 
                 TextColumn::make('items_count')
                     ->label('Items')

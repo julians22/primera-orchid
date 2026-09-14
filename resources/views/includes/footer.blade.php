@@ -30,10 +30,26 @@
         <div class="flex flex-col gap-8 lg:max-w-1/3">
             <p class="font-bold text-white text-lg">{{ __('components.footer.line3') }}</p>
 
-            <form action="#" class="inline-flex lg:flex-row flex-col gap-4">
-                <input type="text" class="bg-white px-3 py-1.5 rounded-full focus:outline-none" placeholder="Email Address">
-                <button type="submit" class="px-3 py-1.5 border border-white rounded-full text-white">Sign up</button>
+            <form action="{{ route('subscribe') }}" method="POST" class="inline-flex lg:flex-row flex-col gap-4">
+                @csrf
+                <input 
+                    type="email" 
+                    name="email" 
+                    required 
+                    class="bg-white px-3 py-1.5 rounded-full focus:outline-none text-black" 
+                    placeholder="Email Address"
+                >
+                <button type="submit" class="px-3 py-1.5 border border-white rounded-full text-white hover:bg-white hover:text-black transition cursor-pointer">
+                    Sign up
+                </button>
             </form>
+
+            @if (session('success'))
+                <p class="text-green-400 text-sm mt-2">{{ session('success') }}</p>
+            @endif
+            @error('email')
+                <p class="text-red-400 text-sm mt-2">{{ $message }}</p>
+            @enderror
             <ul class="gap-4 grid grid-cols-3">
                 <li><a href="{{ $isId ? url('/tentang-kami') : route('about') }}" class="font-semibold text-white">{{ __('nav.about') }}</a></li>
                 <li><a href="{{ $isId ? url('/koleksi') : route('collection.index') }}" class="font-semibold text-white">{{ __('nav.collections') }}</a></li>

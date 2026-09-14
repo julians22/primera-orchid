@@ -41,6 +41,6 @@ return [
     'subscription' => 'SUBSCRIPTION',
 
     'service_item' => [
-        'whatsapp_message' => 'Hello, I am interested in :service - :item',
+        'whatsapp_message' => 'Halo, saya tertarik dengan :service - :item',
     ],
 ];
