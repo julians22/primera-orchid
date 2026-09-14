@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\ContactController;
 use App\Models\Article;
 use App\Models\Collection;
 use App\Models\Product;
@@ -41,7 +42,7 @@ Route::get('layanan', ServiceController::class);
 Route::get('services', ServiceController::class)->name('services');
 
 Route::post('/subscribe', [NewsletterController::class, 'store'])->name('subscribe');
-
+Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
 
 // ============ LANG SWITCHER ============
 Route::get('lang/{locale}', function (string $locale) {
