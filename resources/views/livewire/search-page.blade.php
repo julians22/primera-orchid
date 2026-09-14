@@ -46,7 +46,7 @@
 
         @livewire('search-collections', ['query' => $query], key('collections-'.md5($query)))
 
-        {{-- @livewire('subscription-section') --}}
+        @livewire('subscription-section', ['query' => $query], key('services-'.md5($query)))
 
     </div>
 
