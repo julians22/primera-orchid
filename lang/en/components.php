@@ -11,6 +11,11 @@ return [
         'line2' => 'OUR CUSTOMERS',
     ],
 
+    'ourCollections' => [
+        'line1' => 'OUR',
+        'line2' => 'COLLECTIONS',
+    ],
+
     'footer' => [
         'line1' => '#1 INDONESIAN MINI ORCHIDS IN A BOX',
         'line2' => 'Jl. Polisi Istimewa No.1 C <br> Keputran, Kec. Tegalsari, Surabaya, Jawa Timur 60265',

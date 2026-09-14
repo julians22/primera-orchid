@@ -16,7 +16,12 @@ class SearchArticles extends Component
         $articles = collect();
         $q = trim($this->query);
 
-        if ($q !== '') {
+        if ($q === '') {
+            $articles = Article::with(['categories', 'media'])
+                ->latest()
+                ->take(3)
+                ->get();
+        } elseif (mb_strlen($q) >= 5) {
             $articles = Article::with(['categories', 'media'])
                 ->where(function ($queryBuilder) use ($q) {
                     $queryBuilder->where('title', 'like', "%{$q}%")
@@ -25,11 +30,6 @@ class SearchArticles extends Component
                         ->orWhere('slug', 'like', "%{$q}%");
                 })
                 ->latest()
-                ->get();
-        } else {
-            $articles = Article::with(['categories', 'media'])
-                ->latest()
-                ->take(3)
                 ->get();
         }
 

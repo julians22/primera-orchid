@@ -1,11 +1,15 @@
 @php
     $isId = app()->getLocale() === 'id';
+    $qTrim = trim($query);
+    $qLength = mb_strlen($qTrim);
 @endphp
 
 <section class="my-8">
     <h2 class="text-2xl font-bold mb-6 text-everglade uppercase">
-        @if ($query)
+        @if ($qLength >= 4)
             {{ $isId ? 'Hasil Koleksi untuk "' . $query . '"' : 'Collection Results for "' . $query . '"' }}
+        @elseif ($qLength > 0)
+            {{ $isId ? 'Pencarian Koleksi' : 'Collection Search' }}
         @else
             {{ $isId ? 'Koleksi Kami' : 'Our Collections' }}
         @endif
@@ -14,7 +18,9 @@
     @if ($collections->isEmpty())
         <div class="p-8 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300">
             <p class="text-gray-500 font-medium">
-                @if ($query)
+                @if ($qLength > 0 && $qLength < 5)
+                    {{ $isId ? 'Ketik minimal 5 huruf untuk mencari koleksi.' : 'Please type at least 5 characters to search collections.' }}
+                @elseif ($qLength >= 5)
                     {{ $isId ? 'Koleksi dengan kata kunci "' . $query . '" tidak ditemukan.' : 'No collections found for "' . $query . '".' }}
                 @else
                     {{ $isId ? 'Data koleksi tidak tersedia.' : 'No collections available.' }}

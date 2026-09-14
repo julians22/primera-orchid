@@ -73,7 +73,7 @@
                         <x-si-instagram class="fill-white outline-white size-3 lg:size-5" />
                     </a>
                 </span>
-                <span>
+                {{-- <span>
                     <x-si-x class="fill-white outline-white size-3 lg:size-5"/>
                 </span>
                 <span>
@@ -81,7 +81,7 @@
                 </span>
                 <span>
                     <x-si-youtube class="fill-white outline-white size-3 lg:size-5"/>
-                </span>
+                </span> --}}
             </div>
 
             <div class="text-center">
@@ -168,31 +168,29 @@
                 </li>
 
                 <li class="text-center">
-                    @unless(request()->routeIs('search'))
-                        <div class="relative">
-                            <form action="{{ route('search') }}" method="GET" class="relative max-w-xs mx-auto" onsubmit="this.querySelector('.search-icon').classList.add('hidden'); this.querySelector('.search-loading').classList.remove('hidden');">
-                                <div class="relative">
-                                    <input
-                                        type="text"
-                                        name="query"
-                                        class="bg-transparent px-2 py-1 border border-everglade rounded-full focus:outline-none w-full text-everglade placeholder:text-everglade/80"
-                                        placeholder="Search"
-                                    >
+                    <div class="relative">
+                        <form action="{{ route('search') }}" method="GET" class="relative max-w-xs mx-auto" onsubmit="this.querySelector('.search-icon').classList.add('hidden'); this.querySelector('.search-loading').classList.remove('hidden');">
+                            <div class="relative">
+                                <input
+                                    type="text"
+                                    name="query"
+                                    class="bg-transparent px-2 py-1 border border-everglade rounded-full focus:outline-none w-full text-everglade placeholder:text-everglade/80"
+                                    placeholder="Search"
+                                >
 
-                                    <button type="submit" class="top-1/2 right-2 absolute -translate-y-1/2 transform text-everglade" aria-label="Search">
-                                        <svg class="search-icon size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"></path>
-                                        </svg>
+                                <button type="submit" class="top-1/2 right-2 absolute -translate-y-1/2 transform text-everglade" aria-label="Search">
+                                    <svg class="search-icon size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"></path>
+                                    </svg>
 
-                                        <svg class="search-loading hidden size-5 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8v4a4 4 0 0 0-4 4H4z"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    @endunless
+                                    <svg class="search-loading hidden size-5 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8v4a4 4 0 0 0-4 4H4z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -253,71 +251,69 @@
             </div>
 
             {{-- Mobile Search --}}
-             @unless(request()->routeIs('search'))
+            <div
+                class="top-0 right-0 z-[60] absolute w-full h-24 pt-2"
+                @click.outside="searchOpen = false"
+            >
                 <div
-                    class="top-0 right-0 z-[60] absolute w-full h-24 pt-2"
-                    @click.outside="searchOpen = false"
-                >
-                    <div
-                        x-show="searchOpen"
-                        x-transition:enter="transition-opacity duration-300"
-                        x-transition:enter-start="opacity-0"
-                        x-transition:enter-end="opacity-100"
-                        x-transition:leave="transition-opacity duration-300"
-                        x-transition:leave-start="opacity-100"
-                        x-transition:leave-end="opacity-0"
-                        class="absolute inset-0 bg-white/90 backdrop-blur-md"
-                        style="display: none;"
-                    ></div>
+                    x-show="searchOpen"
+                    x-transition:enter="transition-opacity duration-300"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition-opacity duration-300"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="absolute inset-0 bg-white/90 backdrop-blur-md"
+                    style="display: none;"
+                ></div>
 
-                    <div class="relative flex justify-end items-center px-5 w-full h-full">
-                        <form
-                            action="{{ route('search') }}"
-                            method="GET"
-                            class="relative w-full h-12"
+                <div class="relative flex justify-end items-center px-5 w-full h-full">
+                    <form
+                        action="{{ route('search') }}"
+                        method="GET"
+                        class="relative w-full h-12"
+                    >
+                        <input
+                            type="text"
+                            name="query"
+                            placeholder="{{ $isId ? 'Cari...' : 'Search...' }}"
+                            class="right-0 absolute bg-white px-5 pr-12 border-2 border-everglade rounded-full outline-none h-12 text-everglade placeholder:text-everglade/60 transition-[width,opacity] duration-500 ease-out"
+                            :class="searchOpen
+                                ? 'w-full opacity-100'
+                                : 'w-12 opacity-0 pointer-events-none'"
+                            x-ref="mobileSearch"
                         >
-                            <input
-                                type="text"
-                                name="query"
-                                placeholder="{{ $isId ? 'Cari...' : 'Search...' }}"
-                                class="right-0 absolute bg-white px-5 pr-12 border-2 border-everglade rounded-full outline-none h-12 text-everglade placeholder:text-everglade/60 transition-[width,opacity] duration-500 ease-out"
-                                :class="searchOpen
-                                    ? 'w-full opacity-100'
-                                    : 'w-12 opacity-0 pointer-events-none'"
-                                x-ref="mobileSearch"
-                            >
 
-                            <button
-                                type="button"
-                                @click="
-                                    searchOpen = !searchOpen;
-                                    if (searchOpen) {
-                                        $nextTick(() => $refs.mobileSearch.focus());
-                                    }
-                                "
-                                class="top-1/2 right-3 z-10 absolute flex justify-center items-center -translate-y-1/2 text-everglade size-6"
-                                aria-label="Search"
+                        <button
+                            type="button"
+                            @click="
+                                searchOpen = !searchOpen;
+                                if (searchOpen) {
+                                    $nextTick(() => $refs.mobileSearch.focus());
+                                }
+                            "
+                            class="top-1/2 right-3 z-10 absolute flex justify-center items-center -translate-y-1/2 text-everglade size-6"
+                            aria-label="Search"
+                        >
+                            <svg
+                                class="size-10"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                aria-hidden="true"
                             >
-                                <svg
-                                    class="size-10"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    aria-hidden="true"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                                    />
-                                </svg>
-                            </button>
-                        </form>
-                    </div>
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                                />
+                            </svg>
+                        </button>
+                    </form>
                 </div>
-            @endunless
+            </div>
         </div>
 
         {{-- Circle logo (open state only), overlapping top bar / panel boundary --}}
@@ -483,13 +479,13 @@
                     </a>
                 </span>
 
-                <span>
+                {{-- <span>
                     <x-si-facebook class="fill-white outline-white size-6"/>
                 </span>
 
                 <span>
                     <x-si-youtube class="fill-white outline-white size-6"/>
-                </span>
+                </span> --}}
 
             </div>
 

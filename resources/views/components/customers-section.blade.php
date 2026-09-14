@@ -29,25 +29,19 @@
 
             @foreach($testimonials as $item)
                 @php
-                    // 1. Handle Avatar
                     $avatarUrl = is_array($item) 
                         ? $item['avatar'] 
                         : ($item->avatar ? asset('storage/' . $item->avatar) : asset('img/customer-1.png'));
 
-                    // 2. Handle Name & Location
                     $name = is_array($item) ? $item['name'] : $item->name;
                     $location = is_array($item) ? $item['location'] : $item->location;
 
-                    // 3. Handle Content Multilingual
                     if (is_array($item)) {
-                        // Jika data Dummy (Array biasa)
                         $locale = app()->getLocale();
                         $text = $item['content'][$locale] ?? ($item['content']['en'] ?? ($item['content']['id'] ?? ''));
                     } else {
-                        // Jika Model Eloquent (Spatie Translatable)
                         $text = $item->content;
 
-                        // Fallback jika bahasa aktif di DB kosong
                         if (empty($text)) {
                             $enText = $item->getTranslation('content', 'en', false);
                             $idText = $item->getTranslation('content', 'id', false);

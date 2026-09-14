@@ -16,8 +16,17 @@ class SearchCollections extends Component
         $collections = collect();
         $q = trim($this->query);
 
-        if ($q !== '') {
-            // SAAT SEARCHING: Tampilkan SEMUA produk yang cocok (tanpa dibatasi 3)
+        if ($q === '') {
+            $collections = Collection::with([
+                'products' => function ($productQuery) {
+                    $productQuery->latest()->take(4);
+                }, 
+                'media'
+            ])
+            ->latest()
+            ->take(3)
+            ->get();
+        } elseif (mb_strlen($q) >= 5) {
             $collections = Collection::with(['products', 'media'])
                 ->where(function ($collectionQuery) use ($q) {
                     $collectionQuery->where('name', 'like', "%{$q}%")
@@ -31,17 +40,7 @@ class SearchCollections extends Component
                 })
                 ->latest()
                 ->get();
-        } else {
-            $collections = Collection::with([
-                'products' => function ($productQuery) {
-                    $productQuery->latest()->take(4);
-                }, 
-                'media'
-            ])
-            ->latest()
-            ->take(3)
-            ->get();
-        }
+        } 
 
         return view('livewire.search-collections', compact('collections'));
     }

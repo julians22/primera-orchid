@@ -1,11 +1,15 @@
 @php
     $isId = app()->getLocale() === 'id';
+    $qTrim = trim($query);
+    $qLength = mb_strlen($qTrim);
 @endphp
 
 <section class="my-8">
     <h2 class="text-2xl font-bold mb-6 text-everglade uppercase">
-        @if ($query)
+        @if ($qLength >= 4)
             {{ $isId ? 'Hasil Artikel untuk "' . $query . '"' : 'Article Results for "' . $query . '"' }}
+        @elseif ($qLength > 0)
+            {{ $isId ? 'Pencarian Artikel' : 'Article Search' }}
         @else
             {{ $isId ? 'Artikel Populer' : 'Popular Articles' }}
         @endif
@@ -14,7 +18,9 @@
     @if ($articles->isEmpty())
         <div class="p-8 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300">
             <p class="text-gray-500 font-medium">
-                @if ($query)
+                @if ($qLength > 0 && $qLength < 5)
+                    {{ $isId ? 'Ketik minimal 5 huruf untuk mencari artikel.' : 'Please type at least 5 characters to search articles.' }}
+                @elseif ($qLength >= 5)
                     {{ $isId ? 'Artikel dengan kata kunci "' . $query . '" tidak ditemukan.' : 'No articles found for "' . $query . '".' }}
                 @else
                     {{ $isId ? 'Data artikel tidak tersedia.' : 'No articles available.' }}
