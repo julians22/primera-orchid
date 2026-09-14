@@ -15,7 +15,7 @@
             </h1>
 
             <p class="text-everglade text-lg lg:text-xl tracking-widest max-w-xl">
-                {{ $isId ? 'TEMUKAN KOLEKSI, PRODUK, DAN ARTIKEL TERBAIK KAMI' : 'FIND OUR BEST COLLECTIONS, PRODUCTS, AND ARTICLES' }}
+                {{ $isId ? 'TEMUKAN KOLEKSI, ARTIKEL, DAN LAYANAN TERBAIK KAMI' : 'FIND OUR BEST COLLECTIONS, ARTICLES, AND SUBSCRIPTION' }}
             </p>
 
             <div class="w-full max-w-xl relative mt-2">
