@@ -24,6 +24,8 @@ class ContactResource extends Resource
 
     protected static ?string $navigationLabel = 'Contact Messages';
 
+    protected static string | \UnitEnum | null $navigationGroup = 'Customers';
+
     public static function canCreate(): bool
     {
         return false;

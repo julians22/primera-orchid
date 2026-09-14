@@ -21,6 +21,8 @@ class SubscriberResource extends Resource
 
     protected static ?string $navigationLabel = 'Subscribers';
 
+    protected static string | \UnitEnum | null $navigationGroup = 'Customers';
+
     public static function table(Table $table): Table
     {
         return $table

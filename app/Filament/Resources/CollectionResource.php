@@ -39,6 +39,8 @@ class CollectionResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Collections';
 
+    protected static string | \UnitEnum | null $navigationGroup = 'Collections';
+
     public static function form(Schema $schema): Schema
     {
         return $schema

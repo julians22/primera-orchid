@@ -37,11 +37,13 @@ class ProductResource extends Resource
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-shopping-bag';
 
-    protected static ?string $navigationLabel = 'Products';
+    protected static ?string $navigationLabel = 'Collections Items';
 
     protected static ?string $modelLabel = 'Product';
 
     protected static ?string $pluralModelLabel = 'Products';
+
+    protected static string | \UnitEnum | null $navigationGroup = 'Collections';
 
     public static function form(Schema $schema): Schema
     {
