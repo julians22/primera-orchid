@@ -26,9 +26,9 @@
                         <div class="relative lg:col-span-6 pb-6 overflow-hidden">
                             <div class="bottom-28 lg:bottom-10 absolute flex flex-col gap-2">
                                 <p class="text-everglade-500 text-lg motion-duration-700 swiper-animate">{!! __('home.hero.line1') !!}</p>
-                                <p class="font-serif font-semibold text-everglade-500 text-4xl lg:text-8xl italic motion-duration-700 motion-delay-200 swiper-animate">{!! __('home.hero.line2') !!}</p>
+                                <p class="font-serif font-semibold text-everglade-500 text-4xl xl:text-6xl 2xl:text-8xl italic motion-duration-700 motion-delay-200 swiper-animate">{!! __('home.hero.line2') !!}</p>
                                 <p class="text-everglade-500 text-lg motion-duration-700 motion-delay-300 swiper-animate">{!! __('home.hero.line3') !!}</p>
-                                
+
                                 <a href="#" class="group flex items-center space-x-4 px-6 py-3 border border-everglade rounded-full w-max text-everglade motion-duration-1000 motion-delay-300 swiper-animate">
                                     <span class="font-semibold">{!! __('home.hero.line4') !!}</span>
                                     <span class="w-0 group-hover:w-14 transition-all duration-300">

@@ -54,7 +54,7 @@
     };
 @endphp
 @php
-    
+
 @endphp
 <header
     class="bg-white"
@@ -116,27 +116,27 @@
                 </li>
 
                 <li class="group relative text-center">
-                    <a href="{{ $isId ? url('/koleksi') : route('collection.index') }}" class="font-semibold text-everglade uppercase transition-colors duration-200 group-hover:text-everglade/80">
+                    <a href="{{ $isId ? url('/koleksi') : route('collection.index') }}" class="font-semibold text-everglade group-hover:text-everglade/80 uppercase transition-colors duration-200">
                         {{ __('nav.collections') }}
                     </a>
 
                     @if ($productCollections->isNotEmpty())
                         <div
-                            class="absolute left-1/2 top-full z-50 min-w-48 -translate-x-1/2 pt-4 invisible opacity-0 -translate-y-2 pointer-events-none transition-all duration-300 ease-out group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto"
+                            class="invisible group-hover:visible top-full left-1/2 z-50 absolute opacity-0 group-hover:opacity-100 pt-4 min-w-48 transition-all -translate-x-1/2 -translate-y-2 group-hover:translate-y-0 duration-300 ease-out pointer-events-none group-hover:pointer-events-auto"
                         >
-                            <div class="overflow-hidden rounded-xl border border-everglade/10 bg-white shadow-lg">
+                            <div class="bg-white shadow-lg border border-everglade/10 rounded-xl overflow-hidden">
                                 @foreach ($productCollections as $collection)
                                     @php
-                                        $collectionLabel = $getTranslatableText($collection, 'name') 
-                                            ?? $getTranslatableText($collection, 'title') 
-                                            ?? $getTranslatableText($collection, 'slug') 
-                                            ?? $collection->code 
+                                        $collectionLabel = $getTranslatableText($collection, 'name')
+                                            ?? $getTranslatableText($collection, 'title')
+                                            ?? $getTranslatableText($collection, 'slug')
+                                            ?? $collection->code
                                             ?? $collection->id;
                                         $collectionUrl = $buildCollectionUrl($collection);
                                     @endphp
                                     <a
                                         href="{{ $collectionUrl }}"
-                                        class="block border-b border-everglade/10 px-4 py-3 text-left text-sm font-medium text-everglade transition-all duration-200 ease-out hover:bg-everglade/5 hover:pl-5 last:border-b-0"
+                                        class="block hover:bg-everglade/5 px-4 py-3 hover:pl-5 border-everglade/10 border-b last:border-b-0 font-medium text-everglade text-sm text-left transition-all duration-200 ease-out"
                                     >
                                         {{ $collectionLabel }}
                                     </a>
@@ -152,7 +152,7 @@
 
                 <li class="hidden lg:block">
                     {{-- Logo Circle and absolute position half is outside bottom --}}
-                    <a href="{{ route('home') }}" class="block relative w-45">
+                    <a href="{{ route('home') }}" class="block relative w-40 2xl:w-44">
                         <div class="logo-wrapper">
                             <img src="{{ asset('img/logo-persegi.png') }}" class="w-full" alt="" width="230">
                         </div>
@@ -169,7 +169,7 @@
 
                 <li class="text-center">
                     <div class="relative">
-                        <form action="{{ route('search') }}" method="GET" class="relative max-w-xs mx-auto" onsubmit="this.querySelector('.search-icon').classList.add('hidden'); this.querySelector('.search-loading').classList.remove('hidden');">
+                        <form action="{{ route('search') }}" method="GET" class="relative mx-auto max-w-xs" onsubmit="this.querySelector('.search-icon').classList.add('hidden'); this.querySelector('.search-loading').classList.remove('hidden');">
                             <div class="relative">
                                 <input
                                     type="text"
@@ -178,12 +178,12 @@
                                     placeholder="Search"
                                 >
 
-                                <button type="submit" class="top-1/2 right-2 absolute -translate-y-1/2 transform text-everglade" aria-label="Search">
-                                    <svg class="search-icon size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <button type="submit" class="top-1/2 right-2 absolute text-everglade -translate-y-1/2 transform" aria-label="Search">
+                                    <svg class="size-5 search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"></path>
                                     </svg>
 
-                                    <svg class="search-loading hidden size-5 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <svg class="hidden size-5 animate-spin search-loading" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8v4a4 4 0 0 0-4 4H4z"></path>
                                     </svg>
@@ -244,7 +244,7 @@
                 >
                     <img
                         src="{{ asset('img/logo-persegi.png') }}"
-                        class="w-full h-full object-contain px-4"
+                        class="px-4 w-full h-full object-contain"
                         alt="Primera Orchid"
                     >
                 </a>
@@ -252,7 +252,7 @@
 
             {{-- Mobile Search --}}
             <div
-                class="top-0 right-0 z-[60] absolute w-full h-24 pt-2"
+                class="top-0 right-0 z-[60] absolute pt-2 w-full h-24"
                 @click.outside="searchOpen = false"
             >
                 <div
@@ -292,7 +292,7 @@
                                     $nextTick(() => $refs.mobileSearch.focus());
                                 }
                             "
-                            class="top-1/2 right-3 z-10 absolute flex justify-center items-center -translate-y-1/2 text-everglade size-6"
+                            class="top-1/2 right-3 z-10 absolute flex justify-center items-center size-6 text-everglade -translate-y-1/2"
                             aria-label="Search"
                         >
                             <svg
@@ -364,7 +364,7 @@
                 </li>
 
                 @if ($productCollections->isNotEmpty())
-                    <li class="relative z-50">
+                    <li class="z-50 relative">
 
                         <button
                             @click="productOpen = !productOpen"
@@ -395,7 +395,7 @@
                             x-transition:leave="transition ease-in duration-200"
                             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                             x-transition:leave-end="opacity-0 -translate-y-3 scale-95"
-                            class="relative z-50 mt-2 space-y-2 bg-everglade/90 rounded-lg p-4 text-white text-lg font-semibold shadow-lg origin-top"
+                            class="z-50 relative space-y-2 bg-everglade/90 shadow-lg mt-2 p-4 rounded-lg font-semibold text-white text-lg origin-top"
                         >
                             @foreach ($productCollections as $collection)
                                 @php
@@ -411,7 +411,7 @@
                                 <li>
                                     <a
                                         href="{{ $collectionUrl }}"
-                                        class="block transition-all duration-200 hover:text-everglade/80 hover:translate-x-1"
+                                        class="block hover:text-everglade/80 transition-all hover:translate-x-1 duration-200"
                                     >
                                         {{ $collectionLabel }}
                                     </a>
