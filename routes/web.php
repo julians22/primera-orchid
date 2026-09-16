@@ -15,36 +15,49 @@ use App\Livewire\SearchPage;
 
 Route::get('/', HomeController::class)->name('home');
 
-Route::get('tentang-kami', AboutController::class);
-Route::get('about', AboutController::class)->name('about');
+class SetLocaleId {
+    public function handle($request, $next) {
+        app()->setLocale('id');
+        session()->put('locale', 'id');
+        return $next($request);
+    }
+}
 
-Route::get('koleksi', [ProductController::class, 'index']);
-Route::get('collection', [ProductController::class, 'index'])->name('collection.index');
+// Inline class untuk set locale EN
+class SetLocaleEn {
+    public function handle($request, $next) {
+        app()->setLocale('en');
+        session()->put('locale', 'en');
+        return $next($request);
+    }
+}
 
-Route::get('koleksi/{collection}', [ProductController::class, 'collection']);
-Route::get('collection/{collection}', [ProductController::class, 'collection'])->name('collection.show');
+Route::middleware(SetLocaleId::class)->group(function () {
+    Route::get('tentang-kami', AboutController::class);
+    Route::get('koleksi', [ProductController::class, 'index']);
+    Route::get('koleksi/{collection}', [ProductController::class, 'collection']);
+    Route::get('produk/{product}', [ProductController::class, 'show']);
+    Route::get('artikel', [ArticleController::class, 'index']);
+    Route::get('artikel/{article}', [ArticleController::class, 'show']);
+    Route::get('kontak', ContactController::class);
+    Route::get('layanan', ServiceController::class);
+});
 
-Route::get('produk/{product}', [ProductController::class, 'show']);
-Route::get('product/{product}', [ProductController::class, 'show'])->name('product.show');
-
-Route::get('artikel', [ArticleController::class, 'index']);
-Route::get('article', [ArticleController::class, 'index'])->name('article.index');
-
-Route::get('artikel/{article}', [ArticleController::class, 'show']);
-Route::get('article/{article}', [ArticleController::class, 'show'])->name('article.show');
+Route::middleware(SetLocaleEn::class)->group(function () {
+    Route::get('about', AboutController::class)->name('about');
+    Route::get('collection', [ProductController::class, 'index'])->name('collection.index');
+    Route::get('collection/{collection}', [ProductController::class, 'collection'])->name('collection.show');
+    Route::get('product/{product}', [ProductController::class, 'show'])->name('product.show');
+    Route::get('article', [ArticleController::class, 'index'])->name('article.index');
+    Route::get('article/{article}', [ArticleController::class, 'show'])->name('article.show');
+    Route::get('contact', ContactController::class)->name('contact');
+    Route::get('services', ServiceController::class)->name('services');
+});
 
 Route::get('/search', SearchPage::class)->name('search');
-
-Route::get('kontak', ContactController::class); 
-Route::get('contact', ContactController::class) ->name('contact');
-
-Route::get('layanan', ServiceController::class);
-Route::get('services', ServiceController::class)->name('services');
-
 Route::post('/subscribe', [NewsletterController::class, 'store'])->name('subscribe');
 Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
 
-// ============ LANG SWITCHER ============
 Route::get('lang/{locale}', function (string $locale) {
     if (!in_array($locale, ['en', 'id'])) {
         return redirect()->back();

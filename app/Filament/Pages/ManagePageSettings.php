@@ -34,10 +34,89 @@ class ManagePageSettings extends Page
         
         $formData = [];
         foreach ($settings as $setting) {
-            $formData[$setting->page_key][$setting->section_key] = $setting->payload ?? [];
+            $payload = $setting->payload ?? [];
+
+            if ($setting->page_key === 'home' && $setting->section_key === 'hero' && isset($payload['slides'])) {
+                $payload['slides'] = collect($payload['slides'])
+                    ->map(fn ($slide) => [
+                        'image_desktop'  => $this->normalizeFile($slide['image_desktop'] ?? null),
+                        'image_mobile'   => $this->normalizeFile($slide['image_mobile'] ?? null),
+                        'heading_en'     => $slide['heading_en'] ?? null,
+                        'heading_id'     => $slide['heading_id'] ?? null,
+                        'title_en'       => $slide['title_en'] ?? null,
+                        'title_id'       => $slide['title_id'] ?? null,
+                        'subtitle_en'    => $slide['subtitle_en'] ?? null,
+                        'subtitle_id'    => $slide['subtitle_id'] ?? null,
+                        'button_text_en' => $slide['button_text_en'] ?? null,
+                        'button_text_id' => $slide['button_text_id'] ?? null,
+                        'button_url'     => $slide['button_url'] ?? null,
+                    ])
+                    ->values()
+                    ->toArray();
+            }
+
+            $formData[$setting->page_key][$setting->section_key] = $payload;
         }
 
         $this->form->fill($formData);
+    }
+
+    protected function normalizeFile($value): ?string
+    {
+        if (is_array($value)) {
+            return collect($value)->first();
+        }
+
+        return is_string($value) ? $value : null;
+    }
+
+    public function save(): void
+    {
+        $data = $this->form->getState();
+
+        foreach ($data as $pageKey => $sections) {
+            if (is_array($sections)) {
+                foreach ($sections as $sectionKey => $payload) {
+                    if (! is_array($payload)) continue;
+
+                    if ($pageKey === 'home' && $sectionKey === 'hero' && isset($payload['slides'])) {
+                        $payload['slides'] = collect($payload['slides'])
+                            ->map(fn ($slide) => [
+                                'image_desktop'  => $this->normalizeFile($slide['image_desktop'] ?? null),
+                                'image_mobile'   => $this->normalizeFile($slide['image_mobile'] ?? null),
+                                'heading_en'     => $slide['heading_en'] ?? null,
+                                'heading_id'     => $slide['heading_id'] ?? null,
+                                'title_en'       => $slide['title_en'] ?? null,
+                                'title_id'       => $slide['title_id'] ?? null,
+                                'subtitle_en'    => $slide['subtitle_en'] ?? null,
+                                'subtitle_id'    => $slide['subtitle_id'] ?? null,
+                                'button_text_en' => $slide['button_text_en'] ?? null,
+                                'button_text_id' => $slide['button_text_id'] ?? null,
+                                'button_url'     => $slide['button_url'] ?? null,
+                            ])
+                            ->values()
+                            ->toArray();
+                    }
+
+                    PageSetting::updateOrCreate(
+                        [
+                            'page_key' => $pageKey,
+                            'section_key' => $sectionKey,
+                        ],
+                        [
+                            'payload' => $payload ?? [],
+                        ]
+                    );
+                }
+            }
+        }
+
+        $this->mount();
+
+        Notification::make()
+            ->title('Settings Saved Successfully')
+            ->success()
+            ->send();
     }
 
     public function form(Schema $schema): Schema
@@ -70,22 +149,48 @@ class ManagePageSettings extends Page
 
                                         Tab::make('Hero Banner')
                                             ->schema([
-                                                Grid::make(2)->schema([
-                                                    TextInput::make('home.hero.title_en')->label('Title (EN)')->nullable(),
-                                                    TextInput::make('home.hero.title_id')->label('Title (ID)')->nullable(),
-                                                ]),
-                                                Grid::make(2)->schema([
-                                                    Textarea::make('home.hero.subtitle_en')->label('Subtitle (EN)')->rows(3)->nullable(),
-                                                    Textarea::make('home.hero.subtitle_id')->label('Subtitle (ID)')->rows(3)->nullable(),
-                                                ]),
-                                                Grid::make(2)->schema([
-                                                    FileUpload::make('home.hero.image_1')->label('Banner Image 1')->image()->nullable(),
-                                                    FileUpload::make('home.hero.image_2')->label('Banner Image 2')->image()->nullable(),
-                                                ]),
-                                                Grid::make(2)->schema([
-                                                    TextInput::make('home.hero.button_text')->label('Button Text')->nullable(),
-                                                    TextInput::make('home.hero.button_url')->label('Button URL')->nullable(),
-                                                ]),
+                                                Repeater::make('home.hero.slides')
+                                                    ->label('Hero Slider Slides')
+                                                    ->schema([
+                                                        Grid::make(2)->schema([
+                                                            FileUpload::make('image_desktop')
+                                                                ->label('Desktop Image (1024px+)')
+                                                                ->image()
+                                                                ->directory('home/hero')
+                                                                ->disk('public')
+                                                                ->nullable(),
+                                                            FileUpload::make('image_mobile')
+                                                                ->label('Mobile Image')
+                                                                ->image()
+                                                                ->directory('home/hero')
+                                                                ->disk('public')
+                                                                ->nullable(),
+                                                        ]),
+
+                                                        Grid::make(2)->schema([
+                                                            Textarea::make('heading_en')->label('Heading (EN)')->nullable(),
+                                                            Textarea::make('heading_id')->label('Heading (ID)')->nullable(),
+                                                        ]),
+
+                                                        Grid::make(2)->schema([
+                                                            TextInput::make('title_en')->label('Main Title (EN)')->nullable(),
+                                                            TextInput::make('title_id')->label('Main Title (ID)')->nullable(),
+                                                        ]),
+
+                                                        Grid::make(2)->schema([
+                                                            Textarea::make('subtitle_en')->label('Subtitle (EN)')->rows(2)->nullable(),
+                                                            Textarea::make('subtitle_id')->label('Subtitle (ID)')->rows(2)->nullable(),
+                                                        ]),
+
+                                                        Grid::make(3)->schema([
+                                                            TextInput::make('button_text_en')->label('Button Text (EN)')->nullable(),
+                                                            TextInput::make('button_text_id')->label('Button Text (ID)')->nullable(),
+                                                            TextInput::make('button_url')->label('Button Link URL')->nullable(),
+                                                        ]),
+                                                    ])
+                                                    ->collapsible()
+                                                    ->itemLabel(fn (array $state): ?string => $state['title_en'] ?? $state['title_id'] ?? 'Slide Banner')
+                                                    ->defaultItems(1),
                                             ]),
 
                                         Tab::make('Testimonials')
@@ -204,31 +309,5 @@ class ManagePageSettings extends Page
                     ->columnSpanFull(),
             ])
             ->statePath('data');
-    }
-
-    public function save(): void
-    {
-        $data = $this->form->getState();
-
-        foreach ($data as $pageKey => $sections) {
-            if (is_array($sections)) {
-                foreach ($sections as $sectionKey => $payload) {
-                    PageSetting::updateOrCreate(
-                        [
-                            'page_key' => $pageKey,
-                            'section_key' => $sectionKey,
-                        ],
-                        [
-                            'payload' => $payload ?? [],
-                        ]
-                    );
-                }
-            }
-        }
-
-        Notification::make()
-            ->title('Settings Saved Successfully')
-            ->success()
-            ->send();
     }
 }

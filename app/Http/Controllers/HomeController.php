@@ -56,8 +56,9 @@ class HomeController extends Controller
         }
 
         $meta = $this->getMeta();
+        $heroSlides = $this->getHeroSlides();
 
-        return view('welcome', compact('best_seller_products', 'collections', 'latest_articles', 'testimonials', 'meta'));
+        return view('welcome', compact('best_seller_products', 'collections', 'latest_articles', 'testimonials', 'meta', 'heroSlides'));
     }
 
     private function getMeta(): array
@@ -98,5 +99,34 @@ class HomeController extends Controller
             'title' => $title ?: 'Primera Orchid - Home',
             'description' => $description ?: 'Welcome to Primera Orchid official website.',
         ];
+    }
+
+    private function getHeroSlides(): array
+    {
+        $heroRecord = PageSetting::where('page_key', 'home')
+            ->where('section_key', 'hero')
+            ->first();
+
+        $slides = $heroRecord->payload['slides'] ?? [];
+
+        if (empty($slides)) {
+            $defaultSlide = [
+                    'image_desktop'  => null,
+                    'image_mobile'   => null,
+                    'heading_en'     => 'PREMIUM FRESH ORCHIDS, <br>CRAFTED WITH PASSION IN SURABAYA',
+                    'heading_id'     => 'PREMIUM FRESH ORCHIDS, <br>CRAFTED WITH PASSION IN SURABAYA',
+                    'title_en'       => 'ORCHIDS PERFECTION',
+                    'title_id'       => 'ORCHIDS PERFECTION',
+                    'subtitle_en'    => 'At Primera Orchids, every bloom is thoughtfully curated to bring beauty, freshness, and refinement into your space.',
+                    'subtitle_id'    => 'At Primera Orchids, every bloom is thoughtfully curated to bring beauty, freshness, and refinement into your space.',
+                    'button_text_en' => 'Discover Now',
+                    'button_text_id' => 'Discover Now',
+                    'button_url'     => '#',
+            ];
+
+            return array_fill(0, 4, $defaultSlide);
+        }
+
+        return $slides;
     }
 }

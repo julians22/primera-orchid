@@ -47,7 +47,7 @@
                     x-data="{ shown: true }" 
                     x-intersect:enter.half="shown = true" 
                     x-intersect:leave.half="shown = false" 
-                    class="flex flex-col gap-4 bg-neutral-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition duration-300"
+                    class="flex flex-col gap-4 bg-[#f6f4ee] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition duration-300"
                 >
                     <div class="rounded-xl w-full aspect-[20/9] overflow-hidden bg-gray-100">
                         <img 

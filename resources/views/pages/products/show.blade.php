@@ -112,22 +112,7 @@
         </div>
     </div>
 
-    <!-- Collection Card Grid -->
-    <div class="mx-auto container">
-
-        <div class="gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-
-            @foreach($relatedProducts as $relatedProduct)
-                <x-product-card
-                    :image="asset('img/product-3.jpg')"
-                    :name="trans_field($relatedProduct, 'name')"
-                    :href="route('product.show', trans_field($relatedProduct, 'slug') ?? $relatedProduct->id)"
-                />
-            @endforeach
-
-        </div>
-
-    </div>
+    <x-collection-card-section :collections="$collections" />
 
 </section>
 

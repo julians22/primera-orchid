@@ -18,7 +18,7 @@ return [
 
     'footer' => [
         'line1' => '#1 INDONESIAN MINI ORCHIDS IN A BOX',
-        'line2' => 'Jl. Polisi Istimewa No.1 C <br> Keputran, Kec. Tegalsari, Surabaya, Jawa Timur 60265',
+        'line2' => 'Jl. Polisi Istimewa No.1 C Keputran, Kec. Tegalsari, Surabaya, Jawa Timur 60265',
         'line3' => 'Get a first peek at new products, special offers, and so much more'
     ],
 ];

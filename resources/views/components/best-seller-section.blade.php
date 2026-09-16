@@ -45,15 +45,22 @@
     </div>
 
     <!-- Product Card Grid -->
-    <div class="mx-auto container">
+    <div class="mx-auto container" 
+        x-data="{ shown: false }" 
+        x-intersect:enter.margin.-10%="shown = true" 
+        x-intersect:leave="shown = false">
 
         <div class="gap-8 grid grid-cols-1 lg:grid-cols-4">
-            @foreach ($best_seller_products as $product)
-                <x-product-card
-                    :image="asset('img/product-1.jpg')"
-                    :name="trans_field($product, 'name')"
-                    :href="route('product.show', trans_field($product, 'slug') ?? $product->id)"
-                />
+            @foreach ($best_seller_products as $index => $product)
+                <div :class="shown ? 'animate-apple-in' : 'animate-apple-out'"
+                    :style="`transition-delay: ${shown ? {{ $index * 150 }} : 0}ms`">
+                    
+                    <x-product-card
+                        :image="asset('img/product-1.jpg')"
+                        :name="trans_field($product, 'name')"
+                        :href="route('product.show', trans_field($product, 'slug') ?? $product->id)"
+                    />
+                </div>
             @endforeach
         </div>
     </div>

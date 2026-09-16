@@ -7,53 +7,7 @@
 
 @section('content')
 
-<section>
-    <!-- Slider main container -->
-    <div class="swiper home-swiper"
-        style="--swiper-pagination-bottom: 20px; --swiper-pagination-bullet-horizontal-gap: 6px; --swiper-pagination-bullet-inactive-color: transparent; --swiper-pagination-bullet-inactive-opacity: 1; --swiper-border-width: 1px; --swiper-border-color: #113a3e; --swiper-pagination-bullet-width: 14px; --swiper-pagination-bullet-height: 14px;"
-        >
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper">
-            <!-- Slides -->
-            @for ($i = 0; $i < 4; $i++) <div class="swiper-slide">
-                <div class="content-container-wrapper">
-                    {{-- responsive background image --}}
-                    <picture>
-                        <source media="(min-width: 1024px)" srcset="{{asset('img/banner-1.jpg')}}">
-                        <img class="background" src="{{asset('img/banner-1-mobile.png')}}" alt="Banner">
-                    </picture>
-                    <div class="content-container">
-                        <div class="relative lg:col-span-6 pb-6 overflow-hidden">
-                            <div class="bottom-28 lg:bottom-10 absolute flex flex-col gap-2">
-                                <p class="text-everglade-500 text-lg motion-duration-700 swiper-animate">{!! __('home.hero.line1') !!}</p>
-                                <p class="font-serif font-semibold text-everglade-500 text-4xl xl:text-6xl 2xl:text-8xl italic motion-duration-700 motion-delay-200 swiper-animate">{!! __('home.hero.line2') !!}</p>
-                                <p class="text-everglade-500 text-lg motion-duration-700 motion-delay-300 swiper-animate">{!! __('home.hero.line3') !!}</p>
-
-                                <a href="#" class="group flex items-center space-x-4 px-6 py-3 border border-everglade rounded-full w-max text-everglade motion-duration-1000 motion-delay-300 swiper-animate">
-                                    <span class="font-semibold">{!! __('home.hero.line4') !!}</span>
-                                    <span class="w-0 group-hover:w-14 transition-all duration-300">
-                                        <?xml version="1.0" encoding="UTF-8"?>
-                                        <svg id="b" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 33.55 9.09">
-                                            <g id="c" data-name="Layer 1">
-                                                <path
-                                                    d="m28.01,0c.04,1.23.41,2.93,1.18,4.04H0v1h29.19c-.78,1.14-1.08,2.72-1.19,4.05,1.52-1.86,3.3-3.64,5.55-4.55-2.25-.94-4.11-2.62-5.55-4.54Z"
-                                                    style="fill: #113a3e;" />
-                                            </g>
-                                        </svg>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        </div>
-        @endfor
-        </div>
-        <!-- If we need pagination -->
-        <div class="swiper-pagination"></div>
-    </div>
-</section>
+<x-hero-section :heroSlides="$heroSlides" />
 
 <x-best-seller-section :best_seller_products="$best_seller_products" />
 
@@ -177,6 +131,5 @@
     </div>
 
 </section>
-
 
 @endsection

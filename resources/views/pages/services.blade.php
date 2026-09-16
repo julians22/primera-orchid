@@ -273,84 +273,74 @@
 <section class="space-y-16 mx-auto px-6 py-12 container">
 
     @foreach ($services as $service)
+        <div x-data="{ shown: false }"
+            x-intersect:enter.margin.-5%="shown = true"
+            x-intersect:leave="shown = false"
+            :class="shown ? 'animate-apple-in' : 'animate-apple-out'">
+            <div @if(!$loop->last) class="pb-4 lg:pb-12 border-everglade border-b" @endif>
+                <div class="flex sm:flex-row flex-col sm:justify-between sm:items-start gap-3 mb-6">
+                    <div>
+                        <p class="text-teal-900 text-2xl tracking-[0.15em]">
+                            {!! __('services.subscription') !!}
+                        </p>
 
-        <div @if(!$loop->last) class="pb-4 lg:pb-12 border-everglade border-b" @endif>
+                        <h2 class="-mt-1 font-serif font-semibold text-teal-900 text-5xl italic">
+                            {{ trans_field($service, 'title') ?? trans_field($service, 'name') }}
+                        </h2>
+                    </div>
 
-            <div class="flex sm:flex-row flex-col sm:justify-between sm:items-start gap-3 mb-6">
-
-                <div>
-                    <p class="text-teal-900 text-2xl tracking-[0.15em]">
-                        {!! __('services.subscription') !!}
+                    <p class="max-w-2xl font-semibold text-teal-900 sm:text-right leading-relaxed">
+                        {{ 
+                            trans_field($service, 'description') 
+                            ?? data_get($service->description, 'en') 
+                            ?? trans_field($service, 'short_description') 
+                            ?? data_get($service->short_description, 'en') 
+                        }}
                     </p>
-
-                    <h2 class="-mt-1 font-serif font-semibold text-teal-900 text-5xl italic">
-                        {{ trans_field($service, 'title') ?? trans_field($service, 'name') }}
-                    </h2>
                 </div>
 
-                <p class="max-w-2xl font-semibold text-teal-900 sm:text-right leading-relaxed">
-                    {{ 
-                        trans_field($service, 'description') 
-                        ?? data_get($service->description, 'en') 
-                        ?? trans_field($service, 'short_description') 
-                        ?? data_get($service->short_description, 'en') 
-                    }}
-                </p>
+                <div class="gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                    @foreach ($service->items as $item)
+                        @php
+                            $serviceTitle = trans_field($service, 'title') ?? trans_field($service, 'name');
+                            $itemTitle = trans_field($item, 'title') ?? trans_field($item, 'name');
 
-            </div>
+                            $waServiceMessage = str_replace(
+                                [':service', ':item'],
+                                [$serviceTitle, $itemTitle],
+                                __('services.service_item.whatsapp_message')
+                            );
+                        @endphp
 
+                        <a
+                            href="{{ whatsapp_link('6282218181660', $waServiceMessage) }}"
+                            class="relative flex flex-col bg-everglade shadow-sm rounded-lg overflow-hidden"
+                            target="_blank"
+                        >
+                            <div class="flex-shrink-0 w-full aspect-[12/8] overflow-hidden">
+                                <img
+                                    src="{{ asset($item->getFirstMediaUrl('image')) }}"
+                                    alt="{{ $itemTitle }}"
+                                    class="rounded-lg w-full h-full object-cover"
+                                >
+                            </div>
 
-            <div class="gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-
-                @foreach ($service->items as $item)
-
-                    @php
-                        $serviceTitle = trans_field($service, 'title') ?? trans_field($service, 'name');
-                        $itemTitle = trans_field($item, 'title') ?? trans_field($item, 'name');
-
-                        $waServiceMessage = str_replace(
-                            [':service', ':item'],
-                            [$serviceTitle, $itemTitle],
-                            __('services.service_item.whatsapp_message')
-                        );
-                    @endphp
-
-                    <a
-                        href="{{ whatsapp_link('6282218181660', $waServiceMessage) }}"
-                        class="relative flex flex-col bg-everglade shadow-sm rounded-lg overflow-hidden"
-                        target="_blank"
-                    >
-                        <div class="flex-shrink-0 w-full aspect-[12/8] overflow-hidden">
-                            <img
-                                src="{{ asset($item->getFirstMediaUrl('image')) }}"
-                                alt="{{ $itemTitle }}"
-                                class="rounded-lg w-full h-full object-cover"
-                            >
-                        </div>
-
-                        <div class="flex flex-col justify-center bg-everglade py-3 h-full text-white text-center">
-
-                            <p class="font-bold text-lg">
-                                {{ $itemTitle }}
-                            </p>
-
-                            @if ($item->subtitle || trans_field($item, 'subtitle'))
-                                <p class="font-medium text-sm">
-                                    {{ trans_field($item, 'subtitle') ?? $item->subtitle }}
+                            <div class="flex flex-col justify-center bg-everglade py-3 h-full text-white text-center">
+                                <p class="font-bold text-lg">
+                                    {{ $itemTitle }}
                                 </p>
-                            @endif
-
-                        </div>
-                    </a>
-
-                @endforeach
-
+                                @if ($item->subtitle || trans_field($item, 'subtitle'))
+                                    <p class="font-medium text-sm">
+                                        {{ trans_field($item, 'subtitle') ?? $item->subtitle }}
+                                    </p>
+                                @endif
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
             </div>
-
         </div>
-
     @endforeach
-
 </section>
 
 <x-customers-section :testimonials="$testimonials" />

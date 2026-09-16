@@ -38,14 +38,20 @@
     <!-- Collection Card Grid -->
     <div class="mx-auto container">
 
-        <div class="gap-6 grid grid-cols-1 lg:grid-cols-4">
+        <div class="gap-6 grid grid-cols-1 lg:grid-cols-4"
+            x-data="{ shown: false }" 
+            x-intersect:enter.margin.-10%="shown = true" 
+            x-intersect:leave="shown = false">
 
-            @foreach ($collections as $collection)
-                <x-collection-card
-                    :image="$collection->getFirstMediaUrl('thumbnail', 'webp_format') ?? asset('img/placeholder.png')"
-                    :title="\Str::upper(trans_field($collection, 'name'))"
-                    :href="route('collection.show', trans_field($collection, 'slug') ?? $collection->id)"
-                />
+            @foreach ($collections as $index => $collection)
+                <div :class="shown ? 'animate-apple-in' : 'animate-apple-out'"
+                        :style="`transition-delay: ${shown ? {{ $index * 150 }} : 0}ms`">
+                    <x-collection-card
+                        :image="$collection->getFirstMediaUrl('thumbnail', 'webp_format') ?? asset('img/placeholder.png')"
+                        :title="\Str::upper(trans_field($collection, 'name'))"
+                        :href="route('collection.show', trans_field($collection, 'slug') ?? $collection->id)"
+                    />
+                </div>
             @endforeach
 
         </div>
