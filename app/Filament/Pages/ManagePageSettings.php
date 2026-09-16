@@ -11,6 +11,7 @@ use Filament\Forms\Components\TagsInput;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
@@ -284,7 +285,88 @@ class ManagePageSettings extends Page
                                                     Textarea::make('subscription.seo_meta.meta_description_id')->label('Meta Description (ID)')->rows(3)->nullable(),
                                                 ]),
                                             ]),
+                                        Tab::make('How It Works')
+                                            ->schema([
+                                                Grid::make(2)->schema([
+                                                    TextInput::make('subscription.how_it_works.section_title_en')->label('Section Title (EN)')->nullable(),
+                                                    TextInput::make('subscription.how_it_works.section_title_id')->label('Section Title (ID)')->nullable(),
+                                                ]),
+
+                                                Section::make('Icon 1')
+                                                    ->schema([
+                                                        FileUpload::make('subscription.how_it_works.step1_icon')
+                                                            ->label('Icon 1')
+                                                            ->image()
+                                                            ->directory('subscription/icons')
+                                                            ->disk('public')
+                                                            ->nullable(),
+                                                        Grid::make(2)->schema([
+                                                            Textarea::make('subscription.how_it_works.step1_title_en')->label('Title (EN)')->nullable(),
+                                                            Textarea::make('subscription.how_it_works.step1_title_id')->label('Title (ID)')->nullable(),
+                                                        ]),
+                                                        Grid::make(2)->schema([
+                                                            Textarea::make('subscription.how_it_works.step1_desc_en')->label('Description (EN)')->rows(2)->nullable(),
+                                                            Textarea::make('subscription.how_it_works.step1_desc_id')->label('Description (ID)')->rows(2)->nullable(),
+                                                        ]),
+                                                    ])->collapsible(),
+
+                                                Section::make('Icon 2')
+                                                    ->schema([
+                                                        FileUpload::make('subscription.how_it_works.step2_icon')
+                                                            ->label('Icon 2')
+                                                            ->image()
+                                                            ->directory('subscription/icons')
+                                                            ->disk('public')
+                                                            ->nullable(),
+                                                        Grid::make(2)->schema([
+                                                            Textarea::make('subscription.how_it_works.step2_title_en')->label('Title (EN)')->nullable(),
+                                                            Textarea::make('subscription.how_it_works.step2_title_id')->label('Title (ID)')->nullable(),
+                                                        ]),
+                                                        Grid::make(2)->schema([
+                                                            Textarea::make('subscription.how_it_works.step2_desc_en')->label('Description (EN)')->rows(2)->nullable(),
+                                                            Textarea::make('subscription.how_it_works.step2_desc_id')->label('Description (ID)')->rows(2)->nullable(),
+                                                        ]),
+                                                    ])->collapsible(),
+
+                                                Section::make('Icon 3')
+                                                    ->schema([
+                                                        FileUpload::make('subscription.how_it_works.step3_icon')
+                                                            ->label('Icon 3')
+                                                            ->image()
+                                                            ->directory('subscription/icons')
+                                                            ->disk('public')
+                                                            ->nullable(),
+                                                        Grid::make(2)->schema([
+                                                            Textarea::make('subscription.how_it_works.step3_title_en')->label('Title (EN)')->nullable(),
+                                                            Textarea::make('subscription.how_it_works.step3_title_id')->label('Title (ID)')->nullable(),
+                                                        ]),
+                                                        Grid::make(2)->schema([
+                                                            Textarea::make('subscription.how_it_works.step3_desc_en')->label('Description (EN)')->rows(2)->nullable(),
+                                                            Textarea::make('subscription.how_it_works.step3_desc_id')->label('Description (ID)')->rows(2)->nullable(),
+                                                        ]),
+                                                    ])->collapsible(),
+
+                                                Section::make('Icon 4')
+                                                    ->schema([
+                                                        FileUpload::make('subscription.how_it_works.step4_icon')
+                                                            ->label('Icon 4')
+                                                            ->image()
+                                                            ->directory('subscription/icons')
+                                                            ->disk('public')
+                                                            ->nullable(),
+                                                        Grid::make(2)->schema([
+                                                            Textarea::make('subscription.how_it_works.step4_title_en')->label('Title (EN)')->nullable(),
+                                                            Textarea::make('subscription.how_it_works.step4_title_id')->label('Title (ID)')->nullable(),
+                                                        ]),
+                                                        Grid::make(2)->schema([
+                                                            Textarea::make('subscription.how_it_works.step4_desc_en')->label('Description (EN)')->rows(2)->nullable(),
+                                                            Textarea::make('subscription.how_it_works.step4_desc_id')->label('Description (ID)')->rows(2)->nullable(),
+                                                        ]),
+                                                    ])->collapsible(),
+                                            ]),
                                     ]),
+
+                                
                             ]),
                         
                         Tab::make('Contact Page')

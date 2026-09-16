@@ -13,7 +13,7 @@ class ServiceController extends Controller
      * Handle the incoming request.
      */
     public function __invoke(Request $request)
-    {   
+    {
         $testimonials = Testimonial::where('is_active', true)->get();
 
         if ($testimonials->isEmpty()) {
@@ -42,7 +42,18 @@ class ServiceController extends Controller
         $services = Service::with('items')->get();
 
         $meta = $this->getMeta();
-        return view('pages.services', compact('services', 'testimonials', 'meta'));
+
+        $howItWorks = $this->getHowItWorks();
+
+        return view(
+            'pages.services',
+            compact(
+                'services',
+                'testimonials',
+                'meta',
+                'howItWorks'
+            )
+        );
     }
 
     private function getMeta(): array
@@ -82,6 +93,135 @@ class ServiceController extends Controller
         return [
             'title' => $title ?: 'Subscription',
             'description' => $description ?: 'Welcome to Primera Orchid official website.',
+        ];
+    }
+
+    private function getHowItWorks(): array
+    {
+        $locale = app()->getLocale();
+
+        $record = PageSetting::where('page_key', 'subscription')
+            ->where('section_key', 'how_it_works')
+            ->first();
+
+        $payload = $record->payload ?? [];
+
+        /*
+        |--------------------------------------------------------------------------
+        | Default data
+        |--------------------------------------------------------------------------
+        |
+        | Ini dibuat sama dengan template original.
+        | Kalau data dari Filament kosong, website tetap menggunakan
+        | translation lama.
+        |
+        */
+
+        $defaultSteps = [
+            1 => [
+                'icon' => asset('img/icon/chat.png'),
+                'icon_webp' => asset('img/icon/chat.webp'),
+                'title' => __('services.steps.custom_needs.title'),
+                'description' => __('services.steps.custom_needs.description'),
+            ],
+
+            2 => [
+                'icon' => asset('img/icon/truck.png'),
+                'icon_webp' => asset('img/icon/truck.webp'),
+                'title' => __('services.steps.first_delivery.title'),
+                'description' => __('services.steps.first_delivery.description'),
+            ],
+
+            3 => [
+                'icon' => asset('img/icon/water-can.png'),
+                'icon_webp' => asset('img/icon/water-can.webp'),
+                'title' => __('services.steps.easy_maintenance.title'),
+                'description' => __('services.steps.easy_maintenance.description'),
+            ],
+
+            4 => [
+                'icon' => asset('img/icon/calendar.png'),
+                'icon_webp' => asset('img/icon/calendar.webp'),
+                'title' => __('services.steps.routine_replenishment.title'),
+                'description' => __('services.steps.routine_replenishment.description'),
+            ],
+        ];
+
+        /*
+        |--------------------------------------------------------------------------
+        | Section title
+        |--------------------------------------------------------------------------
+        */
+
+        $sectionTitle = $payload["section_title_{$locale}"]
+            ?? $payload['section_title_en']
+            ?? __('services.how_it_works.title');
+
+        if (empty($sectionTitle)) {
+            $sectionTitle = __('services.how_it_works.title');
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Build steps
+        |--------------------------------------------------------------------------
+        */
+
+        $steps = [];
+
+        for ($i = 1; $i <= 4; $i++) {
+            $iconPath = $payload["step{$i}_icon"] ?? null;
+
+            $title = $payload["step{$i}_title_{$locale}"]
+                ?? $payload["step{$i}_title_en"]
+                ?? null;
+
+            $description = $payload["step{$i}_desc_{$locale}"]
+                ?? $payload["step{$i}_desc_en"]
+                ?? null;
+
+            /*
+             * Kalau Filament punya icon:
+             * subscription/icons/example.png
+             *
+             * maka menjadi:
+             * /storage/subscription/icons/example.png
+             */
+            $icon = !empty($iconPath)
+                ? asset('storage/' . ltrim($iconPath, '/'))
+                : $defaultSteps[$i]['icon'];
+
+            $steps[] = [
+                'icon' => $icon,
+
+                /*
+                 * Kalau icon berasal dari Filament, kita tidak punya
+                 * versi WebP otomatis. Jadi WebP hanya digunakan
+                 * untuk fallback/default icon.
+                 */
+                'icon_webp' => !empty($iconPath)
+                    ? null
+                    : $defaultSteps[$i]['icon_webp'],
+
+                /*
+                 * Jangan pakai nl2br() di Blade.
+                 *
+                 * Translation kamu sudah mempunyai:
+                 * CUSTOM<br>YOUR NEEDS
+                 */
+                'title' => !empty($title)
+                    ? $title
+                    : $defaultSteps[$i]['title'],
+
+                'description' => !empty($description)
+                    ? $description
+                    : $defaultSteps[$i]['description'],
+            ];
+        }
+
+        return [
+            'section_title' => $sectionTitle,
+            'steps' => $steps,
         ];
     }
 }
